@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Prototipo Rápido WebAR</title>
+    <!-- Cargamos A-Frame y AR.js -->
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  </head>
+  <body style="margin: 0px; overflow: hidden;">
+    <!-- Escena AR, deshabilitamos VR para mejor rendimiento móvil -->
+    <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false;' vr-mode-ui="enabled: false">
+
+      <!-- Definimos qué buscar (Marcador Hiro) -->
+      <a-marker preset="hiro">
+        <!-- AGREGAMOS EL TEXTO 3D AQUÍ -->
+        <!-- value: El texto a mostrar -->
+        <!-- position: X Y Z (flota 1 metro arriba) -->
+        <!-- align: centrado -->
+        <!-- animation__bounce: componente de animación que crea el efecto de rebote indefinido -->
+        <a-text
+          value="HOLOGRAMA ACTIVADO"
+          color="#EF2D5E"
+          position="0 1 0"
+          scale="2 2 2"
+          align="center"
+          animation__bounce="property: position; from: 0 1 0; to: 0 1.2 0; dur: 1000; dir: alternate; loop: true; easing: easeInOutQuad"
+        ></a-text>
+      </a-marker>
+
+      <!-- Cámara estática necesaria para AR.js -->
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
+</html>
+
