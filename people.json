@@ -1,0 +1,32 @@
+[
+  {
+    "targetIndex": 0,
+    "id": "denisse",
+    "name": "Dra. Denisse Barrientos Arquelles"
+  },
+  {
+    "targetIndex": 1,
+    "id": "esther",
+    "name": "Dra. Esther Lugo"
+  },
+  {
+    "targetIndex": 2,
+    "id": "rubi",
+    "name": "Ing. Rubí Hernández Luis"
+  },
+  {
+    "targetIndex": 3,
+    "id": "maria",
+    "name": "Dra. María Martínez López"
+  },
+  {
+    "targetIndex": 4,
+    "id": "patricia",
+    "name": "Dra. Patricia Gallegos"
+  },
+  {
+    "targetIndex": 5,
+    "id": "monica",
+    "name": "M.C. Mónica Edith García García"
+  }
+]

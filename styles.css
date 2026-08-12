@@ -1,0 +1,54 @@
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #08060b;
+  color: #fff;
+}
+
+#intro,
+#found-card {
+  position: fixed;
+  z-index: 20;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92vw, 520px);
+}
+
+#intro {
+  top: 6vh;
+}
+
+.intro-card,
+.found-inner {
+  padding: 20px 22px;
+  border: 1px solid rgba(200, 185, 255, .35);
+  border-radius: 18px;
+  background: rgba(15, 10, 22, .82);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
+}
+
+.eyebrow,
+.found-label {
+  font-size: .72rem;
+  letter-spacing: .14em;
+  font-weight: 700;
+  color: #cbbdff;
+}
+
+h1, h2 { margin: 7px 0; }
+p { line-height: 1.45; margin: 8px 0 0; }
+.small { opacity: .7; font-size: .82rem; }
+
+#found-card {
+  bottom: 5vh;
+}
+
+.hidden {
+  display: none;
+}
