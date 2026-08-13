@@ -1,0 +1,10 @@
+[
+  {
+    "id": "denisse",
+    "targetIndex": 0,
+    "name": "Dra. Denisse Barrientos Arquelles",
+    "quote": "Aquí irá una frase breve de Denisse.",
+    "image": "./assets/images/denisse.png",
+    "audio": "./assets/audio/denisse.mp3"
+  }
+]
