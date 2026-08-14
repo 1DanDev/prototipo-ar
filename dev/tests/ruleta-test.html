@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Test AR · Ruleta</title>
+  <link rel="stylesheet" href="./ruleta-test.css">
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+</head>
+<body>
+  <div id="hud" class="hud">
+    <div class="panel">
+      <div class="eyebrow">TEST · RULETA + MINDAR</div>
+      <div class="roulette-wrap" aria-label="Ruleta de prueba">
+        <div class="pointer" aria-hidden="true"></div>
+        <div id="wheel" class="wheel">
+          <span class="label l1">María</span>
+          <span class="label l2">Reto</span>
+          <span class="label l3">Dato</span>
+          <span class="label l4">Pregunta</span>
+        </div>
+      </div>
+      <button id="spinButton" class="spin-button" type="button">Girar ruleta</button>
+      <p id="result" class="result">Apunta la cámara a la imagen mapeada y gira la ruleta.</p>
+      <p id="tracking" class="tracking">Buscando imagen…</p>
+      <button id="resetButton" class="reset-button" type="button">Reiniciar prueba</button>
+    </div>
+  </div>
+
+  <a-scene
+    mindar-image="imageTargetSrc: ../../targets/ruleta.mind; uiError: yes; uiLoading: yes; uiScanning: no; missTolerance: 12; filterMinCF: 0.0001; filterBeta: 0.001;"
+    color-space="sRGB"
+    renderer="colorManagement: true; physicallyCorrectLights: true; alpha: true"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false"
+  >
+    <a-assets timeout="15000">
+      <img id="mariaResource" src="../../assets/images/recurso-maria.png" crossorigin="anonymous">
+    </a-assets>
+
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <!-- ruleta.mind: este test asume que la imagen compilada es targetIndex 0 -->
+    <a-entity id="ruletaTarget" mindar-image-target="targetIndex: 0">
+      <a-image
+        id="resourceOverlay"
+        src="#mariaResource"
+        position="0 0 0.05"
+        width="1"
+        height="1.297"
+        transparent="true"
+        material="shader: flat; transparent: true; alphaTest: 0.01"
+        visible="false"
+      ></a-image>
+    </a-entity>
+  </a-scene>
+
+  <script src="./ruleta-test.js"></script>
+</body>
+</html>
