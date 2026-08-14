@@ -1,65 +1,65 @@
 <!doctype html>
 <html lang="es">
-
 <head>
   <meta charset="utf-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Historias que Inspiran</title>
-
+  <link rel="stylesheet" href="./css/styles.css">
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 </head>
-
 <body>
+  <section id="story-card" class="story-card hidden" aria-live="polite">
+    <h2 id="story-name"></h2>
+    <p id="story-quote"></p>
+    <button id="audio-button" type="button">▶ Escuchar</button>
+    <audio id="story-audio" preload="none"></audio>
+  </section>
 
   <a-scene
-    mindar-image="
-      imageTargetSrc: ./targets/denisse.mind;
-      uiError: no;
-      uiLoading: no;
-      uiScanning: no;
-      missTolerance: 12;
-    "
+    mindar-image="imageTargetSrc: ./targets/targets.mind; uiError: yes; uiLoading: yes; uiScanning: no; missTolerance: 12;"
     color-space="sRGB"
-    renderer="colorManagement: true, physicallyCorrectLights"
+    renderer="colorManagement: true, physicallyCorrectLights: true, alpha: true"
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false"
   >
-
-    <a-assets>
-      <img
-        id="denisse-overlay"
-        src="./assets/images/denisse.png">
+    <a-assets timeout="15000">
+      <img id="overlay-denisse" src="./assets/images/denisse.png">
+      <img id="overlay-esther" src="./assets/images/esther-06.png">
+      <img id="overlay-rubi" src="./assets/images/rubí.png">
+      <img id="overlay-maria" src="./assets/images/maria.png">
+      <img id="overlay-patricia" src="./assets/images/patricia.png">
+      <img id="overlay-monica" src="./assets/images/monica.png">
     </a-assets>
 
-    <a-camera
-      position="0 0 0"
-      look-controls="enabled: false">
-    </a-camera>
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <a-entity
-      id="target-denisse"
-      mindar-image-target="targetIndex: 0">
+    <!-- El índice 0 corresponde a las letras del título. -->
+    <a-entity mindar-image-target="targetIndex: 0" data-person-id="titulo"></a-entity>
 
-      <a-image
-        src="#denisse-overlay"
-        position="0 0 0.05"
-        width="1.5"
-        height="3.25">
-      </a-image>
-
+    <a-entity mindar-image-target="targetIndex: 1" data-person-id="denisse">
+      <a-image src="#overlay-denisse" position="0 0 0.05" width="0.82" height="1.76" transparent="true"></a-image>
     </a-entity>
-
+    <a-entity mindar-image-target="targetIndex: 2" data-person-id="esther">
+      <a-image src="#overlay-esther" position="0 0 0.05" width="0.94" height="2.03" transparent="true"></a-image>
+    </a-entity>
+    <a-entity mindar-image-target="targetIndex: 3" data-person-id="rubi">
+      <a-image src="#overlay-rubi" position="0 0 0.05" width="0.97" height="2.09" transparent="true"></a-image>
+    </a-entity>
+    <a-entity mindar-image-target="targetIndex: 4" data-person-id="maria">
+      <a-image src="#overlay-maria" position="0 0 0.05" width="1.03" height="2.23" transparent="true"></a-image>
+    </a-entity>
+    <a-entity mindar-image-target="targetIndex: 5" data-person-id="patricia">
+      <a-image src="#overlay-patricia" position="0 0 0.05" width="1.03" height="2.23" transparent="true"></a-image>
+    </a-entity>
+    <a-entity mindar-image-target="targetIndex: 6" data-person-id="monica">
+      <a-image src="#overlay-monica" position="0 0 0.05" width="0.70" height="1.52" transparent="true"></a-image>
+    </a-entity>
   </a-scene>
 
+  <script src="./js/audio.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/ar.js"></script>
 </body>
-
 </html>

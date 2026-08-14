@@ -8,10 +8,15 @@ function setAudioSource(src) {
 
   storyAudio.currentTime = 0;
 
+  if (!src) {
+    storyAudio.removeAttribute("src");
+    audioButton.hidden = true;
+    return;
+  }
+
   storyAudio.src = src;
-
   storyAudio.load();
-
+  audioButton.hidden = false;
   audioButton.textContent = "▶ Escuchar";
 
 }

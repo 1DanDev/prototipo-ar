@@ -1,10 +1,9 @@
 [
-  {
-    "id": "denisse",
-    "targetIndex": 0,
-    "name": "Dra. Denisse Barrientos Arquelles",
-    "quote": "Aquí irá una frase breve de Denisse.",
-    "image": "./assets/images/denisse.png",
-    "audio": "./assets/audio/denisse.mp3"
-  }
+  {"id":"titulo","targetIndex":0,"name":"Historias que Inspiran","quote":"Descubre las historias de las protagonistas.","image":"","audio":""},
+  {"id":"denisse","targetIndex":1,"name":"Dra. Denisse Barrientos Argüelles","quote":"Aquí irá una frase breve de Denisse.","image":"./assets/images/denisse.png","audio":"./assets/audio/denisse.mp3"},
+  {"id":"esther","targetIndex":2,"name":"Esther","quote":"Aquí irá una frase breve de Esther.","image":"./assets/images/esther-06.png","audio":""},
+  {"id":"rubi","targetIndex":3,"name":"Rubí","quote":"Aquí irá una frase breve de Rubí.","image":"./assets/images/rubí.png","audio":""},
+  {"id":"maria","targetIndex":4,"name":"María","quote":"Aquí irá una frase breve de María.","image":"./assets/images/maria.png","audio":""},
+  {"id":"patricia","targetIndex":5,"name":"Patricia","quote":"Aquí irá una frase breve de Patricia.","image":"./assets/images/patricia.png","audio":""},
+  {"id":"monica","targetIndex":6,"name":"Mónica","quote":"Aquí irá una frase breve de Mónica.","image":"./assets/images/monica.png","audio":""}
 ]

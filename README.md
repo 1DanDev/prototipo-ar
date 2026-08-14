@@ -6,12 +6,7 @@ Este paquete contiene la primera prueba técnica para convertir el mural en una 
 
 Se prepararon 6 recortes a partir de la imagen original:
 
-1. `targets/01-denisse.jpg`
-2. `targets/02-esther.jpg`
-3. `targets/03-rubi.jpg`
-4. `targets/04-maria.jpg`
-5. `targets/05-patricia.jpg`
-6. `targets/06-monica.jpg`
+El archivo actual contiene siete targets: `targetIndex: 0` corresponde a las letras del título; después siguen Denisse (`1`), Esther (`2`), Rubí (`3`), María (`4`), Patricia (`5`) y Mónica (`6`). Consulta `TARGET_MAP.md` para ver la relación completa.
 
 El archivo `targets-contact-sheet.jpg` permite revisar rápidamente los recortes.
 
@@ -23,9 +18,9 @@ https://hiukim.github.io/mind-ar-js-doc/tools/compile/
 
 Sube los 6 JPG en ese orden y pulsa **Start**.
 
-Al terminar, descarga `targets.mind` y colócalo en la raíz de este proyecto, junto a `index.html`.
+Al terminar, descarga `targets.mind` y colócalo en `targets/targets.mind`.
 
-El orden de subida es importante porque determina los `targetIndex` que usará la aplicación.
+El orden de subida es importante porque determina los `targetIndex` que usará la aplicación. Cada entidad de `index.html` enlaza ese índice con una persona mediante `data-person-id`.
 
 ## Paso 2 — Probar localmente
 
