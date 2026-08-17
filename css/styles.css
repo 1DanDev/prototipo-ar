@@ -66,14 +66,14 @@ body {
 
   position: fixed;
 
-  top: 35%;
+  top: 50%;
   left: 50%;
 
   width: min(82vw, 360px);
 
   max-height: 78vh;
 
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -65%);
 
   display: none;
 
@@ -88,7 +88,6 @@ body {
   overflow: hidden;
 
   pointer-events: none;
-
 }
 
 #fixed-image-container.show {
