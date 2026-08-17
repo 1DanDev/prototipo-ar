@@ -174,3 +174,13 @@ body {
   transform: scale(0.9);
 
 }
+/* Ocultar completamente el botón VR de A-Frame */
+
+.a-enter-vr,
+.a-enter-vr-button,
+a-scene .a-enter-vr {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

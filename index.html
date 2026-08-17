@@ -22,7 +22,31 @@
 
 </head>
 
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
 
+    function ocultarVR() {
+
+      const botonesVR = document.querySelectorAll(
+        ".a-enter-vr, .a-enter-vr-button"
+      );
+
+      botonesVR.forEach((boton) => {
+        boton.remove();
+      });
+
+    }
+
+    // Intentar inmediatamente
+    ocultarVR();
+
+    // Intentar después de que A-Frame cargue
+    setTimeout(ocultarVR, 500);
+    setTimeout(ocultarVR, 1000);
+    setTimeout(ocultarVR, 2000);
+
+  });
+</script>
 <body>
 
 
@@ -94,6 +118,7 @@
   <a-scene
 
     id="ar-scene"
+    vr-mode-ui="enabled: false"
 
     mindar-image="
       imageTargetSrc: ./targets/targets.mind;
@@ -110,8 +135,6 @@
       physicallyCorrectLights: true;
       alpha: true
     "
-
-    vr-mode-ui="enabled: false"
 
     device-orientation-permission-ui="enabled: false"
   >
