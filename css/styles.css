@@ -62,3 +62,116 @@ body {
 .hidden {
   display: none;
 }
+#fixed-image-container {
+
+  position: fixed;
+
+  top: 35%;
+  left: 50%;
+
+  width: min(82vw, 360px);
+
+  max-height: 78vh;
+
+  transform: translate(-50%, -50%);
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+  padding: 0;
+
+  z-index: 99990;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+}
+
+#fixed-image-container.show {
+
+  display: flex;
+
+}
+
+#fixed-image {
+
+  display: block;
+
+  width: 100%;
+
+  height: auto;
+
+  max-width: 100%;
+
+  max-height: 78vh;
+
+  margin: 0;
+  padding: 0;
+
+  object-fit: contain;
+
+  object-position: center center;
+
+  transform: none;
+
+  rotate: none;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+
+}
+
+#close-ar {
+
+  position: fixed;
+
+  top: 20px;
+  right: 20px;
+
+  width: 52px;
+  height: 52px;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.8);
+
+  color: white;
+
+  font-size: 28px;
+
+  font-weight: bold;
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  z-index: 100000;
+
+  cursor: pointer;
+
+}
+
+#close-ar.visible {
+
+  display: flex;
+
+}
+
+#close-ar:active {
+
+  transform: scale(0.9);
+
+}

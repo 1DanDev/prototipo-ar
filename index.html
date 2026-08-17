@@ -2,6 +2,7 @@
 <html lang="es">
 
 <head>
+
   <meta charset="utf-8">
 
   <meta
@@ -18,15 +19,23 @@
   <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
 </head>
 
+
 <body>
+
+
+  <!-- ================================================= -->
+  <!-- TARJETA DE INFORMACIÓN -->
+  <!-- ================================================= -->
 
   <section
     id="story-card"
     class="story-card hidden"
     aria-live="polite"
   >
+
     <h2 id="story-name"></h2>
 
     <p id="story-quote"></p>
@@ -42,17 +51,56 @@
       id="story-audio"
       preload="none"
     ></audio>
+
   </section>
 
 
+
+  <!-- ================================================= -->
+  <!-- IMAGEN FIJA -->
+  <!-- ================================================= -->
+
+  <div id="fixed-image-container">
+
+    <img
+      id="fixed-image"
+      src=""
+      alt=""
+      draggable="false"
+    >
+
+  </div>
+
+
+
+  <!-- ================================================= -->
+  <!-- BOTÓN X -->
+  <!-- ================================================= -->
+
+  <button
+    id="close-ar"
+    type="button"
+    aria-label="Cerrar imagen"
+  >
+    ✕
+  </button>
+
+
+
+  <!-- ================================================= -->
+  <!-- ESCENA AR -->
+  <!-- ================================================= -->
+
   <a-scene
+
+    id="ar-scene"
 
     mindar-image="
       imageTargetSrc: ./targets/targets.mind;
       uiError: yes;
       uiLoading: yes;
       uiScanning: no;
-      missTolerance: 12;
+      missTolerance: 30;
     "
 
     color-space="sRGB"
@@ -75,8 +123,9 @@
 
     <a-assets timeout="15000">
 
-      <!-- PNG DE CADA MUJER -->
 
+      <!-- IMÁGENES -->
+      
       <img
         id="overlay-denisse"
         src="./assets/images/denisse.png"
@@ -108,13 +157,12 @@
       >
 
 
-      <!-- MODELO ANIMADO DEL TARGET 0 -->
+      <!-- MODELO 3D -->
 
       <a-asset-item
         id="modelo-mujeres"
         src="./assets/models/mural.glb"
-      >
-      </a-asset-item>
+      ></a-asset-item>
 
     </a-assets>
 
@@ -127,14 +175,13 @@
     <a-camera
       position="0 0 0"
       look-controls="enabled: false"
-    >
-    </a-camera>
+    ></a-camera>
 
 
 
     <!-- ================================================= -->
     <!-- TARGET 0 -->
-    <!-- MODELO MUJERES.GLB -->
+    <!-- MURAL 3D -->
     <!-- ================================================= -->
 
     <a-entity
@@ -143,163 +190,594 @@
     >
 
       <a-gltf-model
-
         id="modelo-mujeres-ar"
-
         src="#modelo-mujeres"
-
         position="0 0 0.05"
-
         rotation="0 0 0"
-
         scale="0.3 0.3 0.3"
-
         animation-mixer
-
-      >
-      </a-gltf-model>
+      ></a-gltf-model>
 
     </a-entity>
 
 
 
     <!-- ================================================= -->
-    <!-- TARGET 1: DENISSE -->
+    <!-- TARGET 1 -->
+    <!-- DENISSE -->
     <!-- ================================================= -->
 
     <a-entity
       mindar-image-target="targetIndex: 1"
       data-person-id="denisse"
-    >
-
-      <a-image
-        src="#overlay-denisse"
-        position="0 0 0.05"
-        width="0.97"
-        height="2.09"
-        transparent="true"
-      >
-      </a-image>
-
-    </a-entity>
+    ></a-entity>
 
 
 
     <!-- ================================================= -->
-    <!-- TARGET 2: ESTHER -->
+    <!-- TARGET 2 -->
+    <!-- ESTHER -->
     <!-- ================================================= -->
 
     <a-entity
       mindar-image-target="targetIndex: 2"
       data-person-id="esther"
-    >
-
-      <a-image
-        src="#overlay-esther"
-        position="0 0 0.05"
-        width="0.97"
-        height="2.09"
-        transparent="true"
-      >
-      </a-image>
-
-    </a-entity>
+    ></a-entity>
 
 
 
     <!-- ================================================= -->
-    <!-- TARGET 3: RUBÍ -->
+    <!-- TARGET 3 -->
+    <!-- RUBÍ -->
     <!-- ================================================= -->
 
     <a-entity
       mindar-image-target="targetIndex: 3"
       data-person-id="rubi"
-    >
-
-      <a-image
-        src="#overlay-rubi"
-        position="0 0 0.05"
-        width="0.97"
-        height="2.09"
-        transparent="true"
-      >
-      </a-image>
-
-    </a-entity>
+    ></a-entity>
 
 
 
     <!-- ================================================= -->
-    <!-- TARGET 4: MARÍA -->
+    <!-- TARGET 4 -->
+    <!-- MARÍA -->
     <!-- ================================================= -->
 
     <a-entity
       mindar-image-target="targetIndex: 4"
       data-person-id="maria"
-    >
-
-      <a-image
-        src="#overlay-maria"
-        position="0 0 0.05"
-        width="0.97"
-        height="2.09"
-        transparent="true"
-      >
-      </a-image>
-
-    </a-entity>
+    ></a-entity>
 
 
 
     <!-- ================================================= -->
-    <!-- TARGET 5: PATRICIA -->
+    <!-- TARGET 5 -->
+    <!-- PATRICIA -->
     <!-- ================================================= -->
 
     <a-entity
       mindar-image-target="targetIndex: 5"
       data-person-id="patricia"
-    >
-
-      <a-image
-        src="#overlay-patricia"
-        position="0 0 0.05"
-        width="0.97"
-        height="2.09"
-        transparent="true"
-      >
-      </a-image>
-
-    </a-entity>
+    ></a-entity>
 
 
 
     <!-- ================================================= -->
-    <!-- TARGET 6: MÓNICA -->
+    <!-- TARGET 6 -->
+    <!-- MÓNICA -->
     <!-- ================================================= -->
 
     <a-entity
       mindar-image-target="targetIndex: 6"
       data-person-id="monica"
-    >
-
-      <a-image
-        src="#overlay-monica"
-        position="0 0 0.05"
-        width="0.97"
-        height="2.09"
-        transparent="true"
-      >
-      </a-image>
-
-    </a-entity>
+    ></a-entity>
 
 
   </a-scene>
 
 
+
+  <!-- ================================================= -->
+  <!-- ARCHIVOS DEL PROYECTO -->
+  <!-- ================================================= -->
+
   <script src="./js/audio.js"></script>
+
   <script src="./js/app.js"></script>
+
   <script src="./js/ar.js"></script>
+
+
+
+  <!-- ================================================= -->
+  <!-- SISTEMA DE IMAGEN FIJA -->
+  <!-- ================================================= -->
+
+  <script>
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+
+        /* =================================================
+         * ELEMENTOS
+         * ================================================= */
+
+        const container =
+          document.getElementById(
+            "fixed-image-container"
+          );
+
+
+        const image =
+          document.getElementById(
+            "fixed-image"
+          );
+
+
+        const closeButton =
+          document.getElementById(
+            "close-ar"
+          );
+
+
+        const storyCard =
+          document.getElementById(
+            "story-card"
+          );
+
+
+
+        /* =================================================
+         * ESTADO
+         * ================================================= */
+
+        let currentTarget = null;
+
+        let locked = false;
+
+
+
+        /* =================================================
+         * IMÁGENES
+         * ================================================= */
+
+        const images = {
+
+          denisse:
+            "./assets/images/denisse.png",
+
+          esther:
+            "./assets/images/esther-06.png",
+
+          rubi:
+            "./assets/images/rubí.png",
+
+          maria:
+            "./assets/images/maria.png",
+
+          patricia:
+            "./assets/images/patricia.png",
+
+          monica:
+            "./assets/images/monica.png"
+
+        };
+
+
+
+        /* =================================================
+         * ELIMINAR IMAGEN
+         * ================================================= */
+
+        function removeImage() {
+
+          /*
+           * Ocultar
+           */
+
+          container.classList.remove(
+            "show"
+          );
+
+
+          /*
+           * Eliminar completamente
+           * la imagen.
+           */
+
+          image.src = "";
+
+          image.removeAttribute(
+            "src"
+          );
+
+
+          image.alt = "";
+
+
+          /*
+           * Ocultar botón.
+           */
+
+          closeButton.classList.remove(
+            "visible"
+          );
+
+
+          /*
+           * Ocultar tarjeta.
+           */
+
+          if (storyCard) {
+
+            storyCard.classList.add(
+              "hidden"
+            );
+
+          }
+
+
+          /*
+           * Eliminar referencia.
+           */
+
+          currentTarget = null;
+
+
+          /*
+           * Liberar bloqueo.
+           */
+
+          locked = false;
+
+
+          console.log(
+            "Imagen anterior eliminada."
+          );
+
+        }
+
+
+
+        /* =================================================
+         * MOSTRAR IMAGEN
+         * ================================================= */
+
+        function showImage(
+          target
+        ) {
+
+          const personId =
+            target.getAttribute(
+              "data-person-id"
+            );
+
+
+          /*
+           * Obtener imagen.
+           */
+
+          const src =
+            images[personId];
+
+
+          if (!src) {
+
+            console.warn(
+              "No existe imagen:",
+              personId
+            );
+
+            locked = false;
+
+            currentTarget = null;
+
+            return;
+
+          }
+
+
+
+          /*
+           * SEGURIDAD:
+           *
+           * Primero eliminamos cualquier
+           * imagen que pudiera existir.
+           */
+
+          container.classList.remove(
+            "show"
+          );
+
+
+          image.removeAttribute(
+            "src"
+          );
+
+
+
+          /*
+           * Esperar un frame del navegador
+           * para asegurarnos de que la
+           * imagen anterior desapareció.
+           */
+
+          requestAnimationFrame(
+            function () {
+
+
+              /*
+               * Colocar NUEVA imagen.
+               */
+
+              image.src = src;
+
+
+              image.alt =
+                "Historia de " +
+                personId;
+
+
+
+              /*
+               * Mostrar.
+               */
+
+              container.classList.add(
+                "show"
+              );
+
+
+              /*
+               * Mostrar X.
+               */
+
+              closeButton.classList.add(
+                "visible"
+              );
+
+
+              /*
+               * Asegurarnos de que el
+               * target AR no tenga contenido
+               * visible.
+               */
+
+              target.object3D.visible =
+                false;
+
+
+              console.log(
+                "Mostrando únicamente:",
+                personId
+              );
+
+            }
+          );
+
+        }
+
+
+
+        /* =================================================
+         * TODOS LOS TARGETS
+         * ================================================= */
+
+        const targets =
+          document.querySelectorAll(
+            "a-entity[mindar-image-target]"
+          );
+
+
+
+        targets.forEach(
+          function (target) {
+
+
+            /* =============================================
+             * TARGET ENCONTRADO
+             * ============================================= */
+
+            target.addEventListener(
+              "targetFound",
+              function () {
+
+
+                const personId =
+                  target.getAttribute(
+                    "data-person-id"
+                  );
+
+
+                console.log(
+                  "Detectado:",
+                  personId
+                );
+
+
+
+                /*
+                 * TARGET 0
+                 *
+                 * Es el mural 3D.
+                 *
+                 * No lo modificamos.
+                 */
+
+                if (
+                  personId === "titulo"
+                ) {
+
+                  return;
+
+                }
+
+
+
+                /*
+                 * Si ya existe una imagen,
+                 * ignorar completamente
+                 * el nuevo marcador.
+                 */
+
+                if (locked) {
+
+                  console.log(
+                    "Hay una imagen activa. Presiona X primero."
+                  );
+
+                  return;
+
+                }
+
+
+
+                /*
+                 * Bloquear.
+                 */
+
+                locked = true;
+
+
+                currentTarget =
+                  target;
+
+
+
+                /*
+                 * Esperar un momento
+                 * para que MindAR confirme
+                 * el marcador.
+                 */
+
+                setTimeout(
+                  function () {
+
+
+                    if (
+                      currentTarget ===
+                      target &&
+                      locked
+                    ) {
+
+                      showImage(
+                        target
+                      );
+
+                    }
+
+                  },
+                  300
+                );
+
+              }
+            );
+
+
+
+            /* =============================================
+             * TARGET PERDIDO
+             * ============================================= */
+
+            target.addEventListener(
+              "targetLost",
+              function () {
+
+
+                console.log(
+                  "Marcador perdido:",
+                  target.getAttribute(
+                    "data-person-id"
+                  )
+                );
+
+
+                /*
+                 * IMPORTANTE:
+                 *
+                 * NO eliminamos la imagen.
+                 *
+                 * Se queda fija.
+                 */
+
+              }
+            );
+
+          }
+        );
+
+
+
+        /* =================================================
+         * BOTÓN X
+         * ================================================= */
+
+        closeButton.addEventListener(
+          "click",
+          function () {
+
+
+            console.log(
+              "Botón X presionado."
+            );
+
+
+            /*
+             * Eliminar imagen.
+             */
+
+            removeImage();
+
+
+            /*
+             * Si había target,
+             * restaurarlo.
+             */
+
+            if (
+              currentTarget
+            ) {
+
+              currentTarget.object3D.visible =
+                true;
+
+            }
+
+
+            /*
+             * Limpiar referencia.
+             */
+
+            currentTarget =
+              null;
+
+
+            /*
+             * IMPORTANTE:
+             *
+             * Permitimos nuevamente
+             * escanear.
+             */
+
+            locked =
+              false;
+
+
+            console.log(
+              "Listo para escanear otro marcador."
+            );
+
+          }
+        );
+
+
+      }
+    );
+
+  </script>
+
 
 </body>
 
