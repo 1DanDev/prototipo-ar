@@ -1,23 +1,16 @@
 const storyCard =
   document.querySelector("#story-card");
 
-const storyName =
-  document.querySelector("#story-name");
-
 const storyQuote =
   document.querySelector("#story-quote");
 
 
 let people = {};
 
-let hideTimer = null;
-
-
 
 // ============================================
 // CARGAR PEOPLE.JSON
 // ============================================
-
 
 async function loadPeople() {
 
@@ -26,17 +19,15 @@ async function loadPeople() {
     const response =
       await fetch("./data/people.json");
 
-
     const data =
       await response.json();
 
-
     data.forEach((person) => {
 
-      people[person.id] = person;
+      people[person.id] =
+        person;
 
     });
-
 
     console.log(
       "Personas cargadas:",
@@ -57,15 +48,12 @@ async function loadPeople() {
 }
 
 
-
 loadPeople();
 
 
-
 // ============================================
-// TARGET ENCONTRADO
+// PERSONA ENCONTRADA
 // ============================================
-
 
 window.addEventListener(
   "person-found",
@@ -73,6 +61,12 @@ window.addEventListener(
 
     const personId =
       event.detail.personId;
+
+
+    console.log(
+      "Mostrando panel:",
+      personId
+    );
 
 
     const person =
@@ -91,54 +85,90 @@ window.addEventListener(
     }
 
 
-    clearTimeout(hideTimer);
-
-
-    storyName.textContent =
-      person.name;
-
+    // ========================================
+    // MOSTRAR SOLO LA FRASE
+    // ========================================
 
     storyQuote.textContent =
       person.quote;
 
+
+    // ========================================
+    // CONFIGURAR AUDIO
+    // ========================================
 
     AudioController.setSource(
       person.audio
     );
 
 
+    // ========================================
+    // MOSTRAR PANEL
+    // ========================================
+
     storyCard.classList.remove(
       "hidden"
     );
 
-  }
-);
 
-
-
-// ============================================
-// TARGET PERDIDO
-// ============================================
-
-
-window.addEventListener(
-  "person-lost",
-  () => {
-
-    clearTimeout(hideTimer);
-
-
-    hideTimer = setTimeout(
-      () => {
-
-        storyCard.classList.add(
-          "hidden"
-        );
-
-      },
-
-      1500
+    console.log(
+      "Panel mostrado correctamente para:",
+      personId
     );
 
   }
 );
+
+
+// ============================================
+// PERSONA PERDIDA
+// ============================================
+
+window.addEventListener(
+  "person-lost",
+  (event) => {
+
+    console.log(
+      "Marcador perdido:",
+      event.detail?.personId
+    );
+
+
+    /*
+     * NO OCULTAR EL PANEL.
+     *
+     * Se queda visible hasta X.
+     */
+
+  }
+);
+
+
+// ============================================
+// CERRAR PANEL
+// ============================================
+
+function unlockStoryPanel() {
+
+  storyCard.classList.add(
+    "hidden"
+  );
+
+
+  storyQuote.textContent =
+    "";
+
+
+  console.log(
+    "Panel cerrado."
+  );
+
+}
+
+
+// ============================================
+// DISPONIBLE GLOBALMENTE
+// ============================================
+
+window.unlockStoryPanel =
+  unlockStoryPanel;
