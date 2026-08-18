@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 1050" role="img" aria-labelledby="title desc">
+  <title id="title">Contraportada provisional</title>
+  <desc id="desc">Contraportada lila con mensaje de cierre</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#21112f"/>
+      <stop offset="0.58" stop-color="#593083"/>
+      <stop offset="1" stop-color="#9b78dc"/>
+    </linearGradient>
+  </defs>
+  <rect width="740" height="1050" fill="url(#bg)"/>
+  <g fill="none" stroke="#d9ccff" stroke-width="3" opacity=".28">
+    <circle cx="370" cy="525" r="320"/><circle cx="370" cy="525" r="250"/><circle cx="370" cy="525" r="180"/>
+  </g>
+  <text x="370" y="438" fill="#d9ccff" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle" letter-spacing="4">ESTA HISTORIA</text>
+  <text x="370" y="510" fill="#fff" font-family="Arial, sans-serif" font-size="62" font-weight="900" text-anchor="middle">TAMBIÉN PUEDE</text>
+  <text x="370" y="580" fill="#fff" font-family="Arial, sans-serif" font-size="62" font-weight="900" text-anchor="middle">SER LA TUYA</text>
+  <rect x="220" y="628" width="300" height="5" rx="2.5" fill="#d9ccff"/>
+  <text x="370" y="696" fill="#f4efff" font-family="Arial, sans-serif" font-size="24" text-anchor="middle">Historias que Inspiran</text>
+  <text x="370" y="978" fill="#fff" fill-opacity=".66" font-family="Arial, sans-serif" font-size="19" text-anchor="middle">Imagen provisional — reemplázala por tu contraportada final</text>
+</svg>

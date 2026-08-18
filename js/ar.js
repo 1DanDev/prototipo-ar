@@ -1,174 +1,40 @@
+// Este archivo es el único puente entre MindAR y la interfaz HTML.
+// No modifica el tracking ni los objetos 3D de los siete targets.
 const arTargets = document.querySelectorAll(
   "[mindar-image-target][data-person-id]"
 );
 
-
-// ============================================
-// ESTADO DE LA SELECCIÓN
-// ============================================
-
-let selectedPersonId = null;
-
-let arLocked = false;
-
-
-// ============================================
-// RECORRER TODOS LOS TARGETS
-// ============================================
+const confirmationTimers = new Map();
+const confirmedTargets = new Set();
 
 arTargets.forEach((target) => {
+  const personId = target.dataset.personId;
 
-  const personId =
-    target.dataset.personId;
+  target.addEventListener("targetFound", () => {
+    console.log("Target encontrado:", personId);
 
+    window.clearTimeout(confirmationTimers.get(target));
 
-  // ==========================================
-  // TARGET ENCONTRADO
-  // ==========================================
+    // El mural se responde inmediatamente. Para los rostros se espera un
+    // momento breve y se descartan detecciones que se pierdan enseguida.
+    const confirmationDelay = personId === "titulo" ? 0 : 250;
+    const timer = window.setTimeout(() => {
+      confirmedTargets.add(target);
+      window.ARUI.handleTargetFound(personId);
+    }, confirmationDelay);
 
-  target.addEventListener(
-    "targetFound",
-    () => {
+    confirmationTimers.set(target, timer);
+  });
 
-      console.log(
-        "Target encontrado:",
-        personId
-      );
+  target.addEventListener("targetLost", () => {
+    console.log("Target perdido:", personId);
 
+    window.clearTimeout(confirmationTimers.get(target));
+    confirmationTimers.delete(target);
 
-      /*
-       * Si ya existe una persona seleccionada,
-       * ignoramos cualquier otra imagen.
-       */
-
-      if (arLocked) {
-
-        console.log(
-          "AR bloqueada. Se ignora:",
-          personId
-        );
-
-        return;
-
-      }
-
-
-      /*
-       * No bloquear el target del título.
-       */
-
-      if (personId === "titulo") {
-
-        return;
-
-      }
-
-
-      /*
-       * Guardamos la persona seleccionada.
-       */
-
-      selectedPersonId =
-        personId;
-
-
-      /*
-       * Bloqueamos la selección.
-       */
-
-      arLocked = true;
-
-
-      /*
-       * Avisamos a app.js.
-       */
-
-      window.dispatchEvent(
-
-        new CustomEvent(
-          "person-found",
-          {
-            detail: {
-              personId: personId
-            }
-          }
-        )
-
-      );
-
+    if (confirmedTargets.has(target)) {
+      confirmedTargets.delete(target);
+      window.ARUI.handleTargetLost(personId);
     }
-  );
-
-
-  // ==========================================
-  // TARGET PERDIDO
-  // ==========================================
-
-  target.addEventListener(
-    "targetLost",
-    () => {
-
-      console.log(
-        "Target perdido:",
-        personId
-      );
-
-
-      /*
-       * NO desbloqueamos aquí.
-       *
-       * La imagen y el panel deben permanecer
-       * hasta que el usuario presione X.
-       */
-
-      window.dispatchEvent(
-
-        new CustomEvent(
-          "person-lost",
-          {
-            detail: {
-              personId: personId
-            }
-          }
-        )
-
-      );
-
-    }
-  );
-
+  });
 });
-
-
-// ============================================
-// FUNCIÓN PARA CERRAR LA SELECCIÓN
-// ============================================
-
-function unlockAR() {
-
-  console.log(
-    "Desbloqueando AR..."
-  );
-
-
-  selectedPersonId =
-    null;
-
-
-  arLocked =
-    false;
-
-
-  console.log(
-    "AR desbloqueada. Se puede escanear otra imagen."
-  );
-
-}
-
-
-// ============================================
-// HACERLA DISPONIBLE PARA EL BOTÓN X
-// ============================================
-
-window.unlockAR =
-  unlockAR;

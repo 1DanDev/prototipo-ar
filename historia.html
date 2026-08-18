@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4b267d">
+  <title>Historia que inspira</title>
+  <link rel="stylesheet" href="./css/historia.css?v=3.0.0">
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="./index.html" aria-label="Volver al escáner">
+      <span class="brand-mark" aria-hidden="true">✦</span>
+      <span>Historias que inspiran</span>
+    </a>
+
+    <a class="back-link" href="./index.html">
+      <span aria-hidden="true">←</span> Volver a AR
+    </a>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="person-name">
+      <div class="hero-decoration hero-decoration-one" aria-hidden="true"></div>
+      <div class="hero-decoration hero-decoration-two" aria-hidden="true"></div>
+
+      <div class="portrait-wrap">
+        <img id="person-image" class="portrait" src="" alt="">
+        <span class="portrait-label">Ingeniería · Ciencia · Inspiración</span>
+      </div>
+
+      <div class="hero-copy">
+        <p class="eyebrow">Conoce su historia</p>
+        <h1 id="person-name">Historia que inspira</h1>
+        <blockquote id="person-quote"></blockquote>
+
+        <audio id="person-audio" controls preload="metadata" hidden></audio>
+      </div>
+    </section>
+
+    <section class="story-layout">
+      <article class="story-article">
+        <p class="section-number">01</p>
+        <h2>Una historia que merece ser visible</h2>
+        <p id="person-story">
+          Esta historia forma parte de un proyecto que reconoce las experiencias de las
+          mujeres en la ciencia y la ingeniería. Cada trayectoria abre posibilidades para
+          quienes están imaginando su propio futuro profesional.
+        </p>
+
+        <div class="quote-card">
+          <span aria-hidden="true">“</span>
+          <p>Cuando una historia se comparte, también puede convertirse en el comienzo de otra.</p>
+        </div>
+      </article>
+
+      <aside class="project-card">
+        <p class="eyebrow">Sobre el proyecto</p>
+        <h2>Historias que inspiran</h2>
+        <p>
+          Una experiencia de realidad aumentada creada para visibilizar a mujeres de la
+          ciencia y la ingeniería, acercar sus voces e inspirar nuevas posibilidades.
+        </p>
+        <a class="primary-link" href="./index.html">Escanear otra historia</a>
+        <a class="secondary-link"
+          href="https://www.flipsnack.com/E6E6DBC9E8C/fanzinev1">
+          Abrir fanzine interactivo
+        </a>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <p>Historias que inspiran · Experiencia web de realidad aumentada</p>
+  </footer>
+
+  <script src="./js/historia.js?v=3.0.0"></script>
+</body>
+
+</html>

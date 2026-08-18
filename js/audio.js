@@ -1,5 +1,12 @@
 const storyAudio = document.querySelector("#story-audio");
 const audioButton = document.querySelector("#audio-button");
+const audioButtonLabel = document.querySelector("#audio-button-label");
+const audioIcon = audioButton.querySelector(".audio-icon");
+
+function updateAudioButton(isPlaying) {
+  audioButtonLabel.textContent = isPlaying ? "Pausar audio" : "Reproducir audio";
+  audioIcon.textContent = isPlaying ? "Ⅱ" : "▶";
+}
 
 
 function setAudioSource(src) {
@@ -17,7 +24,7 @@ function setAudioSource(src) {
   storyAudio.src = src;
   storyAudio.load();
   audioButton.hidden = false;
-  audioButton.textContent = "▶ Escuchar";
+  updateAudioButton(false);
 
 }
 
@@ -30,7 +37,7 @@ audioButton.addEventListener("click", async () => {
 
       await storyAudio.play();
 
-      audioButton.textContent = "⏸ Pausar";
+      updateAudioButton(true);
 
     }
 
@@ -49,7 +56,7 @@ audioButton.addEventListener("click", async () => {
 
     storyAudio.pause();
 
-    audioButton.textContent = "▶ Escuchar";
+    updateAudioButton(false);
 
   }
 
@@ -58,13 +65,18 @@ audioButton.addEventListener("click", async () => {
 
 storyAudio.addEventListener("ended", () => {
 
-  audioButton.textContent = "▶ Escuchar";
+  updateAudioButton(false);
 
 });
 
 
 window.AudioController = {
 
-  setSource: setAudioSource
+  setSource: setAudioSource,
+  stop() {
+    storyAudio.pause();
+    storyAudio.currentTime = 0;
+    updateAudioButton(false);
+  }
 
 };

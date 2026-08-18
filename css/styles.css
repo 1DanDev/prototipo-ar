@@ -1,199 +1,351 @@
-* {
-  box-sizing: border-box;
+:root {
+  --lila: #c9b8ff;
+  --lila-claro: #eee9ff;
+  --morado: #6d3cc3;
+  --morado-oscuro: #21132f;
+  --blanco: #ffffff;
+  --negro-suave: rgba(16, 9, 25, 0.86);
+  --sombra: 0 18px 50px rgba(14, 6, 25, 0.36);
+  --radio: 22px;
 }
+
+* { box-sizing: border-box; }
 
 html,
 body {
-  margin: 0;
   width: 100%;
   height: 100%;
+  margin: 0;
   overflow: hidden;
-
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-
-  color: white;
+  color: var(--blanco);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
-#more-button {
-  display: block !important;
-  width: 100%;
-  height: 50px;
-  margin: 10px 0;
-  padding: 10px;
-  background: white;
-  color: black;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: bold;
-  position: relative;
-  z-index: 999999;
+
+button,
+a { font: inherit; }
+
+/* A-Frame/MindAR permanece debajo de toda la interfaz HTML. */
+a-scene {
+  position: fixed !important;
+  inset: 0;
+  z-index: 0;
 }
-.story-card {
+
+.ar-ui {
   position: fixed;
+  inset: 0;
   z-index: 9999;
+  pointer-events: none;
+}
 
+.ar-ui button,
+.ar-ui a,
+.tutorial-card,
+.story-card { pointer-events: auto; }
+
+.hidden,
+[hidden] { display: none !important; }
+
+/* ESTADO 1: ONBOARDING */
+.onboarding {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: max(20px, env(safe-area-inset-top)) 20px max(20px, env(safe-area-inset-bottom));
+  background: rgba(20, 10, 31, 0.72);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.tutorial-card {
+  width: min(100%, 430px);
+  padding: 28px 24px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: var(--radio);
+  background: linear-gradient(160deg, rgba(76, 42, 112, .96), rgba(33, 19, 47, .97));
+  box-shadow: var(--sombra);
+}
+
+.tutorial-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  color: var(--morado-oscuro);
+  background: var(--lila);
+  font-size: 24px;
+}
+
+.tutorial-card h1 {
+  margin: 0 0 18px;
+  font-size: clamp(1.65rem, 7vw, 2.15rem);
+  line-height: 1.08;
+}
+
+.tutorial-card ol {
+  margin: 0 0 24px;
+  padding-left: 1.4rem;
+  color: var(--lila-claro);
+  line-height: 1.55;
+}
+
+.tutorial-card li + li { margin-top: 10px; }
+
+.button {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 18px;
+  border: 0;
+  border-radius: 15px;
+  font-weight: 750;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button-primary {
+  width: 100%;
+  color: var(--blanco);
+  background: var(--morado);
+}
+
+.tutorial-card .button-primary {
+  color: var(--morado-oscuro);
+  background: var(--lila);
+}
+
+/* ESTADO 2: ESCANEO */
+.scan-ui { position: absolute; inset: 0; }
+
+.scan-hint {
+  position: absolute;
+  top: max(18px, env(safe-area-inset-top));
   left: 50%;
-  bottom: 24px;
-
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  margin: 0;
+  padding: 11px 17px;
   transform: translateX(-50%);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 999px;
+  background: rgba(26, 15, 39, .76);
+  box-shadow: 0 8px 24px rgba(0,0,0,.22);
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
+  font-size: .94rem;
+  font-weight: 700;
+  text-align: center;
+}
 
-  width: min(90vw, 420px);
+.scanner-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(74vw, 330px);
+  aspect-ratio: 3 / 4;
+  transform: translate(-50%, -50%);
+}
 
-  padding: 18px 20px;
+.corner {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-color: var(--lila);
+  border-style: solid;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,.4));
+}
 
-  background: rgba(20, 12, 30, 0.9);
+.corner-tl { top: 0; left: 0; border-width: 4px 0 0 4px; border-radius: 18px 0 0; }
+.corner-tr { top: 0; right: 0; border-width: 4px 4px 0 0; border-radius: 0 18px 0 0; }
+.corner-bl { bottom: 0; left: 0; border-width: 0 0 4px 4px; border-radius: 0 0 0 18px; }
+.corner-br { right: 0; bottom: 0; border-width: 0 4px 4px 0; border-radius: 0 0 18px; }
 
-  border: 1px solid rgba(200, 185, 255, 0.35);
-  border-radius: 18px;
+.scan-line {
+  position: absolute;
+  left: 7%;
+  width: 86%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--lila), transparent);
+  box-shadow: 0 0 10px var(--lila);
+  animation: scan 2.6s ease-in-out infinite alternate;
+}
 
+@keyframes scan {
+  from { top: 12%; }
+  to { top: 88%; }
+}
+
+/* ESTADO 3A: CARTEL */
+.poster-result {
+  position: absolute;
+  right: 18px;
+  bottom: max(22px, env(safe-area-inset-bottom));
+  left: 18px;
+}
+
+.button-fanzine {
+  width: 100%;
+  color: var(--morado-oscuro);
+  background: var(--lila);
+  box-shadow: var(--sombra);
+}
+
+/* IMAGEN ESTABLE AÑADIDA POR ANDY, AHORA INTEGRADA CON LA UI */
+.fixed-image-container {
+  position: absolute;
+  z-index: 2;
+  top: 40%;
+  left: 50%;
+  display: flex;
+  width: min(82vw, 360px);
+  max-height: 55dvh;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fixed-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 55dvh;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.close-ar {
+  position: absolute;
+  z-index: 6;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  display: grid;
+  width: 50px;
+  height: 50px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 50%;
+  color: var(--blanco);
+  background: rgba(20, 10, 31, .86);
+  box-shadow: 0 10px 28px rgba(0,0,0,.34);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
-.story-card h2 {
-  margin: 0 0 8px;
-}
+.close-ar:active { transform: scale(.93); }
 
-.story-card p {
-  margin: 0 0 16px;
-}
-
-#audio-button {
-  width: 100%;
-  padding: 12px 16px;
-
-  border: 0;
-  border-radius: 12px;
-
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.hidden {
-  display: none;
-}
-#fixed-image-container {
-
-  position: fixed;
-
-  top: 50%;
-  left: 50%;
-
-  width: min(82vw, 360px);
-
-  max-height: 78vh;
-
-  transform: translate(-50%, -60%);
-
-  display: none;
-
-  align-items: center;
-  justify-content: center;
-
-  margin: 0;
-  padding: 0;
-
-  z-index: 99990;
-
-  overflow: hidden;
-
-  pointer-events: none;
-}
-
-#fixed-image-container.show {
-
-  display: flex;
-
-}
-
-#fixed-image {
-
+/* ESTADO 3B: TARJETA DE HISTORIA */
+.story-card {
+  position: absolute;
+  z-index: 4;
+  right: 14px;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  left: 14px;
   display: block;
-
-  width: 100%;
-
-  height: auto;
-
-  max-width: 100%;
-
-  max-height: 78vh;
-
-  margin: 0;
-  padding: 0;
-
-  object-fit: contain;
-
-  object-position: center center;
-
-  transform: none;
-
-  rotate: none;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-drag: none;
-
+  width: auto;
+  max-height: min(39dvh, 340px);
+  overflow: auto;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: var(--radio);
+  background: var(--negro-suave);
+  box-shadow: var(--sombra);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 
-#close-ar {
+.story-content { min-width: 0; padding: 18px 16px; }
+.story-kicker { margin: 0 0 5px; color: var(--lila); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.story-card h2 { margin: 0 0 8px; font-size: 1.18rem; line-height: 1.18; }
+.story-quote { margin: 0 0 15px; color: var(--lila-claro); font-size: .91rem; line-height: 1.42; }
+.story-actions { display: grid; gap: 9px; }
 
-  position: fixed;
-
-  top: 20px;
-  right: 20px;
-
-  width: 52px;
-  height: 52px;
-
-  margin: 0;
-  padding: 0;
-
-  border: none;
-
-  border-radius: 50%;
-
-  background: rgba(0, 0, 0, 0.8);
-
-  color: white;
-
-  font-size: 28px;
-
-  font-weight: bold;
-
-  display: none;
-
-  align-items: center;
-  justify-content: center;
-
-  z-index: 100000;
-
-  cursor: pointer;
-
-}
-
-#close-ar.visible {
-
+.audio-button {
   display: flex;
-
+  min-height: 46px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid rgba(201,184,255,.45);
+  border-radius: 14px;
+  color: var(--blanco);
+  background: transparent;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-#close-ar:active {
-
-  transform: scale(0.9);
-
+.audio-icon {
+  display: grid;
+  flex: 0 0 31px;
+  height: 31px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--morado-oscuro);
+  background: var(--lila);
+  font-size: .72rem;
 }
-/* Ocultar completamente el botón VR de A-Frame */
 
+.button-secondary {
+  min-height: 44px;
+  border: 1px solid rgba(255,255,255,.25);
+  color: var(--blanco);
+  background: transparent;
+}
+
+@media (min-width: 600px) {
+  .fixed-image-container {
+    top: 50%;
+    left: 28%;
+    width: min(43vw, 460px);
+    max-height: 74dvh;
+  }
+
+  .fixed-image { max-height: 74dvh; }
+
+  .story-card {
+    right: 24px;
+    bottom: max(24px, env(safe-area-inset-bottom));
+    left: auto;
+    width: min(430px, calc(100vw - 48px));
+    max-height: min(72dvh, 610px);
+  }
+
+  .poster-result { right: 24px; left: 24px; margin: auto; max-width: 520px; }
+}
+
+/* A-Frame ya tiene vr-mode-ui desactivado; esto cubre botones residuales. */
 .a-enter-vr,
 .a-enter-vr-button,
 a-scene .a-enter-vr {
   display: none !important;
   visibility: hidden !important;
-  opacity: 0 !important;
   pointer-events: none !important;
+}
+
+@media (max-height: 650px) {
+  .fixed-image-container {
+    top: 35%;
+    max-height: 43dvh;
+  }
+
+  .fixed-image { max-height: 43dvh; }
+  .story-card { max-height: 43dvh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-line { animation: none; top: 50%; }
 }

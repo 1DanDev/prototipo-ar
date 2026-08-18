@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 1050" role="img" aria-labelledby="title desc">
+  <title id="title">Página interior provisional 2</title>
+  <desc id="desc">Composición editorial lila con espacio para un botón de audio</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5efff"/>
+      <stop offset="1" stop-color="#ded0ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="740" height="1050" fill="url(#bg)"/>
+  <rect x="0" y="0" width="740" height="138" fill="#321b49"/>
+  <text x="52" y="70" fill="#d9ccff" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="4">HISTORIA 01</text>
+  <text x="52" y="112" fill="#fff" font-family="Arial, sans-serif" font-size="30" font-weight="800">UNA VOZ QUE ABRE CAMINO</text>
+  <rect x="52" y="188" width="636" height="388" rx="26" fill="#8d68ca"/>
+  <circle cx="370" cy="336" r="104" fill="#cdbbff"/>
+  <circle cx="370" cy="312" r="54" fill="#321b49" opacity=".72"/>
+  <path d="M265 491c24-112 186-112 210 0z" fill="#321b49" opacity=".72"/>
+  <text x="52" y="635" fill="#321b49" font-family="Arial, sans-serif" font-size="46" font-weight="900">ATREVERSE TAMBIÉN</text>
+  <text x="52" y="688" fill="#7044b1" font-family="Arial, sans-serif" font-size="46" font-weight="900">ES INGENIERÍA</text>
+  <text x="52" y="755" fill="#463254" font-family="Arial, sans-serif" font-size="24">Escucha el testimonio con el botón interactivo.</text>
+  <rect x="52" y="790" width="636" height="2" fill="#8d68ca" opacity=".45"/>
+  <text x="52" y="837" fill="#463254" font-family="Arial, sans-serif" font-size="19">La imagen y los textos de esta hoja son provisionales.</text>
+  <text x="52" y="870" fill="#463254" font-family="Arial, sans-serif" font-size="19">Reemplaza este SVG con la página exportada del PDF.</text>
+  <text x="660" y="1000" fill="#7044b1" font-family="Arial, sans-serif" font-size="24" font-weight="700">02</text>
+</svg>

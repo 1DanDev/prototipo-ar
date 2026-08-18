@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#241336">
+
+  <title>Fanzine Interactivo | Historias que Inspiran</title>
+
+  <link rel="stylesheet" href="./css/fanzine.css?v=1.0.0">
+
+  <!-- StPageFlip para Vanilla JS. La versión se fija para evitar cambios inesperados. -->
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"
+  ></script>
+  <script defer src="./js/fanzine.js?v=1.0.0"></script>
+</head>
+
+<body>
+  <a class="back-to-camera" href="./index.html" aria-label="Regresar al escáner de realidad aumentada">
+    <span aria-hidden="true">←</span>
+    <span>Regresar a la Cámara</span>
+  </a>
+
+  <main class="fanzine-shell">
+    <header class="fanzine-header">
+      <p class="eyebrow">Historias que inspiran</p>
+      <h1>Fanzine Digital Interactivo</h1>
+      <p>Desliza una esquina o usa las flechas para cambiar de página.</p>
+    </header>
+
+    <section class="book-stage" aria-label="Lector del fanzine">
+      <div id="book-container" class="flip-book">
+
+        <!-- HOJA 1: PORTADA -->
+        <article class="book-page book-cover" data-density="hard" aria-label="Portada">
+          <img
+            class="page-background"
+            src="./assets/fanzine/pagina-01.svg"
+            alt="Portada del fanzine Historias que Inspiran"
+          >
+        </article>
+
+        <!-- HOJA 2: PÁGINA INTERIOR CON AUDIO -->
+        <article class="book-page inner-page" data-density="soft" aria-label="Página 2">
+          <img
+            class="page-background"
+            src="./assets/fanzine/pagina-02.svg"
+            alt="Página interior dedicada a historias de mujeres en ingeniería"
+          >
+
+          <button
+            class="page-action hotspot-audio"
+            type="button"
+            data-action="audio"
+            aria-pressed="false"
+          >
+            <span class="action-icon" aria-hidden="true">▶</span>
+            <span class="action-label">Reproducir Audio</span>
+          </button>
+        </article>
+
+        <!-- HOJA 3: PÁGINA INTERIOR CON ENLACE/ACCIÓN -->
+        <article class="book-page inner-page" data-density="soft" aria-label="Página 3">
+          <img
+            class="page-background"
+            src="./assets/fanzine/pagina-03.svg"
+            alt="Página interior sobre creatividad, ciencia e ingeniería"
+          >
+
+          <button
+            class="page-action hotspot-more"
+            type="button"
+            data-action="more"
+          >
+            <span class="action-icon" aria-hidden="true">✦</span>
+            <span>Saber más</span>
+          </button>
+        </article>
+
+        <!-- HOJA 4: CONTRAPORTADA -->
+        <article class="book-page book-cover" data-density="hard" aria-label="Contraportada">
+          <img
+            class="page-background"
+            src="./assets/fanzine/pagina-04.svg"
+            alt="Contraportada del fanzine Historias que Inspiran"
+          >
+        </article>
+      </div>
+
+      <p id="book-error" class="book-error" role="alert" hidden>
+        No se pudo cargar el visor. Revisa tu conexión e inténtalo de nuevo.
+      </p>
+    </section>
+
+    <nav class="book-controls" aria-label="Controles de páginas">
+      <button id="previous-page" type="button" aria-label="Ir a la página anterior">←</button>
+      <p id="page-status" aria-live="polite">Página 1 de 4</p>
+      <button id="next-page" type="button" aria-label="Ir a la página siguiente">→</button>
+    </nav>
+  </main>
+
+  <p id="action-feedback" class="action-feedback" role="status" aria-live="polite" hidden></p>
+
+  <!-- Audio de prueba. Sustituye el src por el audio de la página correspondiente. -->
+  <audio id="fanzine-audio" src="./assets/audio/denisse.mp3" preload="metadata"></audio>
+</body>
+
+</html>

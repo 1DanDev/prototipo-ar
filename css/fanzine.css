@@ -1,0 +1,321 @@
+:root {
+  --lila: #cdbbff;
+  --lila-claro: #f0eaff;
+  --morado: #7246c8;
+  --morado-profundo: #241336;
+  --morado-noche: #160b23;
+  --blanco: #ffffff;
+  --sombra-libro: 0 24px 70px rgba(8, 3, 15, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  color: var(--blanco);
+  background:
+    radial-gradient(circle at 20% 10%, rgba(126, 82, 192, 0.38), transparent 38%),
+    radial-gradient(circle at 85% 90%, rgba(96, 43, 146, 0.3), transparent 34%),
+    var(--morado-profundo);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.back-to-camera {
+  position: fixed;
+  z-index: 9999;
+  top: max(12px, env(safe-area-inset-top));
+  left: max(12px, env(safe-area-inset-left));
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  color: var(--blanco);
+  background: rgba(22, 11, 35, 0.88);
+  box-shadow: 0 9px 26px rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  font-size: 0.86rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.back-to-camera:focus-visible,
+.book-controls button:focus-visible,
+.page-action:focus-visible {
+  outline: 3px solid var(--blanco);
+  outline-offset: 3px;
+}
+
+.fanzine-shell {
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  padding:
+    max(70px, calc(env(safe-area-inset-top) + 62px))
+    max(10px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom))
+    max(10px, env(safe-area-inset-left));
+}
+
+.fanzine-header {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 720px);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.fanzine-header .eyebrow {
+  margin: 0 0 3px;
+  color: var(--lila);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.fanzine-header h1 {
+  margin: 0;
+  font-size: clamp(1.25rem, 6vw, 2rem);
+  line-height: 1.08;
+}
+
+.fanzine-header > p:last-child {
+  margin: 6px 0 0;
+  color: var(--lila-claro);
+  font-size: clamp(0.76rem, 2.8vw, 0.94rem);
+}
+
+.book-stage {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  place-items: center;
+  overflow: hidden;
+}
+
+/* StPageFlip calcula el tamaño final dentro de estos límites. */
+.flip-book {
+  width: 100%;
+  max-width: 1100px;
+  height: 100%;
+  max-height: 780px;
+  margin: auto;
+  filter: drop-shadow(var(--sombra-libro));
+}
+
+.book-page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f4efff;
+  box-shadow: inset 0 0 0 1px rgba(42, 20, 65, 0.12);
+}
+
+.book-cover {
+  background: #6a3fa8;
+}
+
+.page-background {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  object-fit: cover;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.page-action {
+  position: absolute;
+  z-index: 10;
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 999px;
+  color: var(--blanco);
+  background: rgba(36, 19, 54, 0.9);
+  box-shadow: 0 9px 24px rgba(18, 7, 29, 0.3);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  font-size: clamp(0.68rem, 2.7vw, 0.9rem);
+  font-weight: 800;
+  line-height: 1.1;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.page-action:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.action-icon {
+  display: grid;
+  flex: 0 0 27px;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--morado-profundo);
+  background: var(--lila);
+  font-size: 0.7rem;
+}
+
+.hotspot-audio {
+  right: 7%;
+  bottom: 7%;
+  left: 7%;
+}
+
+.hotspot-more {
+  right: 7%;
+  bottom: 7%;
+}
+
+.book-controls {
+  position: relative;
+  z-index: 20;
+  display: grid;
+  width: min(100%, 330px);
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  margin: 0 auto;
+}
+
+.book-controls button {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: var(--morado-profundo);
+  background: var(--lila);
+  font-size: 1.25rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.book-controls button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.book-controls p {
+  margin: 0;
+  color: var(--lila-claro);
+  font-size: 0.86rem;
+  font-weight: 750;
+  text-align: center;
+}
+
+.action-feedback,
+.book-error {
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  color: var(--blanco);
+  background: rgba(22, 11, 35, 0.94);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  font-weight: 700;
+  text-align: center;
+}
+
+.action-feedback {
+  position: fixed;
+  z-index: 10000;
+  right: 16px;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  left: 16px;
+  width: min(calc(100% - 32px), 420px);
+  margin: auto;
+}
+
+.book-error {
+  width: min(calc(100% - 24px), 420px);
+  margin: auto;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (min-width: 700px) {
+  .fanzine-shell {
+    gap: 14px;
+    padding-top: max(28px, env(safe-area-inset-top));
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .fanzine-header > p:last-child {
+    margin-top: 8px;
+  }
+
+  .page-action {
+    min-height: 48px;
+    padding: 11px 16px;
+  }
+
+  .hotspot-audio {
+    right: auto;
+    left: 8%;
+  }
+}
+
+@media (max-height: 650px) {
+  .fanzine-shell {
+    grid-template-rows: minmax(0, 1fr) auto;
+    padding-top: max(64px, calc(env(safe-area-inset-top) + 55px));
+  }
+
+  .fanzine-header {
+    display: none;
+  }
+
+  .book-controls button {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-action:active {
+    transform: none;
+  }
+}

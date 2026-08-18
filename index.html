@@ -2,7 +2,6 @@
 <html lang="es">
 
 <head>
-
   <meta charset="utf-8">
 
   <meta
@@ -12,114 +11,99 @@
 
   <title>Historias que Inspiran</title>
 
-  <link rel="stylesheet" href="./css/styles.css">
+  <!-- El parámetro v evita que GitHub Pages/el celular reutilicen el CSS anterior. -->
+  <link rel="stylesheet" href="./css/styles.css?v=4.0.0">
 
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
 </head>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-
-    function ocultarVR() {
-
-      const botonesVR = document.querySelectorAll(
-        ".a-enter-vr, .a-enter-vr-button"
-      );
-
-      botonesVR.forEach((boton) => {
-        boton.remove();
-      });
-
-    }
-
-    // Intentar inmediatamente
-    ocultarVR();
-
-    // Intentar después de que A-Frame cargue
-    setTimeout(ocultarVR, 500);
-    setTimeout(ocultarVR, 1000);
-    setTimeout(ocultarVR, 2000);
-
-  });
-</script>
 <body>
 
+  <!-- UI HTML superpuesta a la cámara. No forma parte de la escena 3D. -->
+  <main id="ar-ui" class="ar-ui">
 
-  <!-- ================================================= -->
-  <!-- TARJETA DE INFORMACIÓN -->
-  <!-- ================================================= -->
+    <!-- ESTADO 1: tutorial inicial -->
+    <section id="onboarding" class="onboarding" aria-labelledby="tutorial-title">
+      <div class="tutorial-card" role="dialog" aria-modal="true">
+        <span class="tutorial-icon" aria-hidden="true">✦</span>
+        <h1 id="tutorial-title">Historias que inspiran en AR</h1>
+        <ol>
+          <li>Concede permisos de cámara.</li>
+          <li>Apunta al cartel completo o a los rostros de las científicas para descubrir sus historias.</li>
+        </ol>
+        <button id="start-button" class="button button-primary" type="button">
+          Comenzar a Escanear
+        </button>
+      </div>
+    </section>
 
-  <section
-  id="story-card"
-  class="story-card hidden"
-  aria-live="polite"
->
+    <!-- ESTADO 2: búsqueda activa -->
+    <section id="scan-ui" class="scan-ui hidden" aria-live="polite" hidden>
+      <p class="scan-hint">Apunta al cartel o a un rostro</p>
+      <div class="scanner-frame" aria-hidden="true">
+        <i class="corner corner-tl"></i>
+        <i class="corner corner-tr"></i>
+        <i class="corner corner-bl"></i>
+        <i class="corner corner-br"></i>
+        <span class="scan-line"></span>
+      </div>
+    </section>
 
-  <!-- <h2 id="story-name"></h2> -->
+    <!-- ESTADO 3A: cartel completo detectado -->
+    <section id="poster-result" class="poster-result hidden" aria-live="polite" hidden>
+      <a id="fanzine-link" class="button button-fanzine"
+        href="./fanzine.html">
+        Abrir Fanzine Interactivo
+      </a>
+    </section>
 
-  <p id="story-quote"></p>
+    <!-- Imagen HTML estable: no tiembla cuando MindAR pierde algunos fotogramas. -->
+    <div id="fixed-image-container" class="fixed-image-container hidden" hidden>
+      <img id="fixed-image" class="fixed-image" src="" alt="" draggable="false">
+    </div>
 
-  <button
-    id="more-button"
-    type="button"    
-  >
-    Ver más
-  </button>
+    <button id="close-ar" class="close-ar hidden" type="button"
+      aria-label="Cerrar historia y escanear otra" hidden>
+      ×
+    </button>
 
-  <button
-    id="audio-button"
-    type="button"
-  >
-    ▶ Escuchar
-  </button>
+    <!-- ESTADO 3B: mujer detectada -->
+    <section id="story-card" class="story-card hidden" aria-live="polite" hidden>
+      <div class="story-content">
+        <p class="story-kicker">Historia que inspira</p>
+        <h2 id="story-name"></h2>
+        <p id="story-quote" class="story-quote"></p>
 
-  <audio
-    id="story-audio"
-    preload="none"
-  ></audio>
+        <div class="story-actions">
+          <button id="audio-button" class="audio-button" type="button">
+            <span class="audio-icon" aria-hidden="true">▶</span>
+            <span id="audio-button-label">Reproducir audio</span>
+          </button>
 
-</section>
+          <a id="learn-more-link" class="button button-primary" href="#">
+            Saber más
+          </a>
 
-  <!-- ================================================= -->
-  <!-- IMAGEN FIJA -->
-  <!-- ================================================= -->
+          <button id="scan-again-button" class="button button-secondary" type="button">
+            <span aria-hidden="true">↻</span>
+            <span>Escanear otra historia</span>
+          </button>
+        </div>
+      </div>
 
-  <div id="fixed-image-container">
+      <audio id="story-audio" preload="none"></audio>
+    </section>
 
-    <img
-      id="fixed-image"
-      src=""
-      alt=""
-      draggable="false"
-    >
+  </main>
 
-  </div>
-
-  <!-- ================================================= -->
-  <!-- BOTÓN X -->
-  <!-- ================================================= -->
-
-  <button
-    id="close-ar"
-    type="button"
-    aria-label="Cerrar imagen"
-  >
-    ✕
-  </button>
-
-  <!-- ================================================= -->
-  <!-- ESCENA AR -->
-  <!-- ================================================= -->
 
   <a-scene
 
     id="ar-scene"
-    vr-mode-ui="enabled: false"
 
     mindar-image="
       imageTargetSrc: ./targets/targets.mind;
@@ -128,6 +112,7 @@
       uiScanning: no;
       missTolerance: 30;
     "
+
     color-space="sRGB"
 
     renderer="
@@ -135,53 +120,26 @@
       physicallyCorrectLights: true;
       alpha: true
     "
+
+    vr-mode-ui="enabled: false"
+
     device-orientation-permission-ui="enabled: false"
   >
+
+
     <!-- ================================================= -->
     <!-- RECURSOS -->
     <!-- ================================================= -->
 
     <a-assets timeout="15000">
 
-      <!-- IMÁGENES -->
-      
-      <img
-        id="overlay-denisse"
-        src="./assets/images/denisse.png"
-      >
-
-      <img
-        id="overlay-esther"
-        src="./assets/images/esther-06.png"
-      >
-
-      <img
-        id="overlay-rubi"
-        src="./assets/images/rubí.png"
-      >
-
-      <img
-        id="overlay-maria"
-        src="./assets/images/maria.png"
-      >
-
-      <img
-        id="overlay-patricia"
-        src="./assets/images/patricia.png"
-      >
-
-      <img
-        id="overlay-monica"
-        src="./assets/images/monica.png"
-      >
-
-
-      <!-- MODELO 3D -->
+      <!-- MODELO ANIMADO DEL TARGET 0 -->
 
       <a-asset-item
         id="modelo-mujeres"
         src="./assets/models/mural.glb"
-      ></a-asset-item>
+      >
+      </a-asset-item>
 
     </a-assets>
 
@@ -194,13 +152,14 @@
     <a-camera
       position="0 0 0"
       look-controls="enabled: false"
-    ></a-camera>
+    >
+    </a-camera>
 
 
 
     <!-- ================================================= -->
     <!-- TARGET 0 -->
-    <!-- MURAL 3D -->
+    <!-- MODELO MUJERES.GLB -->
     <!-- ================================================= -->
 
     <a-entity
@@ -209,19 +168,28 @@
     >
 
       <a-gltf-model
+
         id="modelo-mujeres-ar"
+
         src="#modelo-mujeres"
+
         position="0 0 0.05"
+
         rotation="0 0 0"
+
         scale="0.3 0.3 0.3"
+
         animation-mixer
-      ></a-gltf-model>
+
+      >
+      </a-gltf-model>
 
     </a-entity>
 
+
+
     <!-- ================================================= -->
-    <!-- TARGET 1 -->
-    <!-- DENISSE -->
+    <!-- TARGET 1: DENISSE -->
     <!-- ================================================= -->
 
     <a-entity
@@ -229,9 +197,10 @@
       data-person-id="denisse"
     ></a-entity>
 
+
+
     <!-- ================================================= -->
-    <!-- TARGET 2 -->
-    <!-- ESTHER -->
+    <!-- TARGET 2: ESTHER -->
     <!-- ================================================= -->
 
     <a-entity
@@ -239,9 +208,10 @@
       data-person-id="esther"
     ></a-entity>
 
+
+
     <!-- ================================================= -->
-    <!-- TARGET 3 -->
-    <!-- RUBÍ -->
+    <!-- TARGET 3: RUBÍ -->
     <!-- ================================================= -->
 
     <a-entity
@@ -249,9 +219,10 @@
       data-person-id="rubi"
     ></a-entity>
 
+
+
     <!-- ================================================= -->
-    <!-- TARGET 4 -->
-    <!-- MARÍA -->
+    <!-- TARGET 4: MARÍA -->
     <!-- ================================================= -->
 
     <a-entity
@@ -259,9 +230,10 @@
       data-person-id="maria"
     ></a-entity>
 
+
+
     <!-- ================================================= -->
-    <!-- TARGET 5 -->
-    <!-- PATRICIA -->
+    <!-- TARGET 5: PATRICIA -->
     <!-- ================================================= -->
 
     <a-entity
@@ -269,9 +241,10 @@
       data-person-id="patricia"
     ></a-entity>
 
+
+
     <!-- ================================================= -->
-    <!-- TARGET 6 -->
-    <!-- MÓNICA -->
+    <!-- TARGET 6: MÓNICA -->
     <!-- ================================================= -->
 
     <a-entity
@@ -279,491 +252,14 @@
       data-person-id="monica"
     ></a-entity>
 
+
   </a-scene>
 
-  <!-- ================================================= -->
-  <!-- ARCHIVOS DEL PROYECTO -->
-  <!-- ================================================= -->
 
-  <script src="./js/audio.js"></script>
-
-  <script src="./js/app.js"></script>
-
-  <script src="./js/ar.js"></script>
-
-  <!-- ================================================= -->
-  <!-- SISTEMA DE IMAGEN FIJA -->
-  <!-- ================================================= -->
-
-  <script>
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      function () {
-
-
-        /* =================================================
-         * ELEMENTOS
-         * ================================================= */
-
-        const container =
-          document.getElementById(
-            "fixed-image-container"
-          );
-
-
-        const image =
-          document.getElementById(
-            "fixed-image"
-          );
-
-
-        const closeButton =
-          document.getElementById(
-            "close-ar"
-          );
-
-
-        const storyCard =
-          document.getElementById(
-            "story-card"
-          );
-
-        /* =================================================
-         * ESTADO
-         * ================================================= */
-
-        let currentTarget = null;
-        let locked = false;
-
-        /* =================================================
-         * IMÁGENES
-         * ================================================= */
-
-        const images = {
-
-          denisse:
-            "./assets/images/denisse.png",
-
-          esther:
-            "./assets/images/esther-06.png",
-
-          rubi:
-            "./assets/images/rubí.png",
-
-          maria:
-            "./assets/images/maria.png",
-
-          patricia:
-            "./assets/images/patricia.png",
-
-          monica:
-            "./assets/images/monica.png"
-
-        };
-        /* =================================================
-         * ELIMINAR IMAGEN
-         * ================================================= */
-        function removeImage() {
-
-          console.log("Cerrando historia...");
-
-
-          // ========================================
-          // DETENER AUDIO
-          // ========================================
-
-          const audio =
-            document.getElementById(
-              "story-audio"
-            );
-
-          if (audio) {
-
-            audio.pause();
-
-            audio.currentTime = 0;
-
-          }
-
-
-          // ========================================
-          // OCULTAR IMAGEN
-          // ========================================
-
-          container.classList.remove(
-            "show"
-          );
-
-
-          // ========================================
-          // ELIMINAR IMAGEN
-          // ========================================
-
-          image.removeAttribute(
-            "src"
-          );
-
-          image.alt = "";
-
-
-          // ========================================
-          // DESBLOQUEAR PANEL
-          // ========================================
-
-          if (window.unlockStoryPanel) {
-
-            window.unlockStoryPanel();
-
-          }
-
-
-          // ========================================
-          // OCULTAR BOTÓN X
-          // ========================================
-
-          closeButton.classList.remove(
-            "visible"
-          );
-
-
-          // ========================================
-          // LIMPIAR TARGET ACTUAL
-          // ========================================
-
-          currentTarget = null;
-
-
-          // ========================================
-          // PERMITIR NUEVO ESCANEO
-          // ========================================
-
-          locked = false;
-
-
-          console.log(
-            "Todo cerrado. Se puede escanear nuevamente."
-          );
-
-        }
-        /* =================================================
-         * MOSTRAR IMAGEN
-         * ================================================= */
-
-        function showImage(
-          target
-        ) {
-
-          const personId =
-            target.getAttribute(
-              "data-person-id"
-            );
-          /*
-           * Obtener imagen.
-           */
-
-          const src =
-            images[personId];
-
-
-          if (!src) {
-
-            console.warn(
-              "No existe imagen:",
-              personId
-            );
-
-            locked = false;
-
-            currentTarget = null;
-
-            return;
-
-          }
-          /*
-           * SEGURIDAD:
-           *
-           * Primero eliminamos cualquier
-           * imagen que pudiera existir.
-           */
-
-          container.classList.remove(
-            "show"
-          );
-
-
-          image.removeAttribute(
-            "src"
-          );
-
-
-
-          /*
-           * Esperar un frame del navegador
-           * para asegurarnos de que la
-           * imagen anterior desapareció.
-           */
-
-          requestAnimationFrame(
-            function () {
-
-
-              /*
-               * Colocar NUEVA imagen.
-               */
-
-              image.src = src;
-
-
-              image.alt =
-                "Historia de " +
-                personId;
-
-
-
-              /*
-               * Mostrar.
-               */
-
-              container.classList.add(
-                "show"
-              );
-
-
-              /*
-               * Mostrar X.
-               */
-
-              closeButton.classList.add(
-                "visible"
-              );
-
-
-              /*
-               * Asegurarnos de que el
-               * target AR no tenga contenido
-               * visible.
-               */
-
-              target.object3D.visible =
-                false;
-
-
-              console.log(
-                "Mostrando únicamente:",
-                personId
-              );
-
-            }
-          );
-
-        }
-
-        /* =================================================
-         * TODOS LOS TARGETS
-         * ================================================= */
-
-        const targets =
-          document.querySelectorAll(
-            "a-entity[mindar-image-target]"
-          );
-
-
-
-        targets.forEach(
-          function (target) {
-
-
-            /* =============================================
-             * TARGET ENCONTRADO
-             * ============================================= */
-
-            target.addEventListener(
-              "targetFound",
-              function () {
-
-
-                const personId =
-                  target.getAttribute(
-                    "data-person-id"
-                  );
-
-
-                console.log(
-                  "Detectado:",
-                  personId
-                );
-
-
-
-                /*
-                 * TARGET 0
-                 *
-                 * Es el mural 3D.
-                 *
-                 * No lo modificamos.
-                 */
-
-                if (
-                  personId === "titulo"
-                ) {
-
-                  return;
-
-                }
-
-
-
-                /*
-                 * Si ya existe una imagen,
-                 * ignorar completamente
-                 * el nuevo marcador.
-                 */
-
-                if (locked) {
-
-                  console.log(
-                    "Hay una imagen activa. Presiona X primero."
-                  );
-
-                  return;
-
-                }
-
-
-
-                /*
-                 * Bloquear.
-                 */
-
-                locked = true;
-
-
-                currentTarget =
-                  target;
-
-
-
-                /*
-                 * Esperar un momento
-                 * para que MindAR confirme
-                 * el marcador.
-                 */
-
-                setTimeout(
-                  function () {
-
-
-                    if (
-                      currentTarget ===
-                      target &&
-                      locked
-                    ) {
-
-                      showImage(
-                        target
-                      );
-
-                    }
-
-                  },
-                  300
-                );
-
-              }
-            );
-
-
-
-            /* =============================================
-             * TARGET PERDIDO
-             * ============================================= */
-
-            target.addEventListener(
-              "targetLost",
-              function () {
-
-
-                console.log(
-                  "Marcador perdido:",
-                  target.getAttribute(
-                    "data-person-id"
-                  )
-                );
-
-
-                /*
-                 * IMPORTANTE:
-                 *
-                 * NO eliminamos la imagen.
-                 *
-                 * Se queda fija.
-                 */
-
-              }
-            );
-
-          }
-        );
-
-
-
-        /* =================================================
-         * BOTÓN X
-         * ================================================= */
-
-        closeButton.addEventListener(
-          "click",
-          function () {
-
-
-            console.log(
-              "Botón X presionado."
-            );
-
-
-            /*
-             * Eliminar imagen.
-             */
-
-            removeImage();
-
-
-            /*
-             * Si había target,
-             * restaurarlo.
-             */
-
-            if (
-              currentTarget
-            ) {
-              currentTarget.object3D.visible =
-                true;
-            }
-            /*
-             * Limpiar referencia.
-             */
-            currentTarget =
-              null;
-            /*
-             * IMPORTANTE:
-             *
-             * Permitimos nuevamente
-             * escanear.
-             */
-            locked =
-              false;
-            console.log(
-              "Listo para escanear otro marcador."
-            );
-
-          }
-        );
-      }
-    );
-
-  </script>
-
+  <!-- El orden es importante: audio -> UI -> conexión con MindAR. -->
+  <script src="./js/audio.js?v=4.0.0"></script>
+  <script src="./js/app.js?v=4.0.0"></script>
+  <script src="./js/ar.js?v=4.0.0"></script>
 
 </body>
 
