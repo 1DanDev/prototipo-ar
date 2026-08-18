@@ -19,50 +19,50 @@ const scanAgainButton = document.querySelector("#scan-again-button");
 let people = {
   denisse: {
     id: "denisse",
-    name: "Dra. Denisse Barrientos Argüelles",
-    quote: "Aquí irá una frase breve de Denisse.",
+    name: "",
+    quote: "Aquí irá una breve frase de Denisse.",
     image: "./assets/images/denisse.png",
     audio: "./assets/audio/denisse.mp3",
     learnMoreUrl: "./historia.html?id=denisse"
   },
   esther: {
     id: "esther",
-    name: "Esther",
-    quote: "Aquí irá una frase breve de Esther.",
+    name: "",
+    quote: "Aquí irá una breve frase de Esther.",
     image: "./assets/images/esther-06.png",
-    audio: "",
+    audio: "./assets/audio/esther.mp3",
     learnMoreUrl: "./historia.html?id=esther"
   },
   rubi: {
     id: "rubi",
-    name: "Rubí",
-    quote: "Aquí irá una frase breve de Rubí.",
+    name: "",
+    quote: "Aquí irá una breve frase de Rubí.",
     image: "./assets/images/rubí.png",
-    audio: "",
+    audio: "./assets/audio/rubi.mp3",
     learnMoreUrl: "./historia.html?id=rubi"
   },
   maria: {
     id: "maria",
-    name: "María",
-    quote: "Aquí irá una frase breve de María.",
+    name: "",
+    quote: "Aquí irá una breve frase de María.",
     image: "./assets/images/maria.png",
-    audio: "",
+    audio: "./assets/audio/maria.mp3",
     learnMoreUrl: "./historia.html?id=maria"
   },
   patricia: {
     id: "patricia",
-    name: "Patricia",
-    quote: "Aquí irá una frase breve de Patricia.",
+    name: "",
+    quote: "Aquí irá una breve frase de Patricia.",
     image: "./assets/images/patricia.png",
-    audio: "",
+    audio: "./assets/audio/patricia.mp3",
     learnMoreUrl: "./historia.html?id=patricia"
   },
   monica: {
     id: "monica",
-    name: "Mónica",
-    quote: "Aquí irá una frase breve de Mónica.",
+    name: "",
+    quote: "Aquí irá una breve frase de Mónica.",
     image: "./assets/images/monica.png",
-    audio: "",
+    audio: "./assets/audio/monica.mp3",
     learnMoreUrl: "./historia.html?id=monica"
   }
 };
