@@ -41,7 +41,8 @@ a-scene {
 .ar-ui button,
 .ar-ui a,
 .tutorial-card,
-.story-card { pointer-events: auto; }
+.story-card,
+.poster-guide { pointer-events: auto; }
 
 .hidden,
 [hidden] { display: none !important; }
@@ -187,6 +188,55 @@ a-scene {
   right: 18px;
   bottom: max(22px, env(safe-area-inset-bottom));
   left: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.poster-guide {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 18px;
+  background: rgba(25, 13, 38, .9);
+  box-shadow: var(--sombra);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.poster-guide-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--morado-oscuro);
+  background: var(--lila);
+  font-size: 1.25rem;
+  font-weight: 950;
+}
+
+.poster-guide-kicker {
+  margin: 0 0 3px;
+  color: var(--lila);
+  font-size: .69rem;
+  font-weight: 850;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.poster-guide h2 {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.15;
+}
+
+.poster-guide div > p:last-child {
+  margin: 7px 0 0;
+  color: var(--lila-claro);
+  font-size: .84rem;
+  line-height: 1.38;
 }
 
 .button-fanzine {

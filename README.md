@@ -1,10 +1,18 @@
 # Historias que Inspiran — MindAR MVP
 
-Este paquete contiene la primera prueba técnica para convertir el mural en una experiencia WebAR.
+Este paquete contiene la experiencia WebAR del mural, la interfaz de acompañamiento y un fanzine local interactivo.
+
+## Funcionamiento sin conexión
+
+La aplicación está preparada como PWA. A-Frame 1.5.0, aframe-extras 7.5.4, MindAR 1.2.5 y StPageFlip 2.0.7 se sirven desde `vendor/`, por lo que no se necesita un CDN durante la presentación.
+
+En la primera visita con Internet, el Service Worker descarga la experiencia completa. Espera el mensaje **“Disponible sin conexión”** antes de desconectar el dispositivo. Consulta `OFFLINE_PRESENTACION.md` para preparar y probar los equipos.
+
+La edición completa se abre en Issuu y requiere conexión. Los artículos de las seis profesoras se muestran localmente desde `historia.html`, mientras que `collage.html` permite escribir y visualizar frases sobre la página editorial correspondiente. El prototipo `fanzine.html` se conserva para continuar desarrollándolo más adelante.
 
 ## Targets candidatos
 
-Se prepararon 6 recortes a partir de la imagen original:
+Se prepararon 6 recortes de rostros a partir de la imagen original, además del target del cartel completo:
 
 El archivo actual contiene siete targets: `targetIndex: 0` corresponde a las letras del título; después siguen Denisse (`1`), Esther (`2`), Rubí (`3`), María (`4`), Patricia (`5`) y Mónica (`6`). Consulta `TARGET_MAP.md` para ver la relación completa.
 
@@ -16,7 +24,7 @@ Usa el compilador oficial de MindAR:
 
 https://hiukim.github.io/mind-ar-js-doc/tools/compile/
 
-Sube los 6 JPG en ese orden y pulsa **Start**.
+Sube las imágenes en el orden documentado y pulsa **Start**.
 
 Al terminar, descarga `targets.mind` y colócalo en `targets/targets.mind`.
 

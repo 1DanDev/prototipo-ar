@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -11,14 +11,24 @@
 
   <title>Historias que Inspiran</title>
 
+  <meta name="theme-color" content="#4b267d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./assets/icons/app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./assets/icons/app-icon-192.png">
+
   <!-- El parámetro v evita que GitHub Pages/el celular reutilicen el CSS anterior. -->
-  <link rel="stylesheet" href="./css/styles.css?v=4.0.0">
+  <link rel="stylesheet" href="./css/styles.css?v=6.0.0">
+  <link rel="stylesheet" href="./css/pwa.css?v=6.0.0">
 
-  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <!-- Dependencias locales: la experiencia AR puede arrancar sin Internet. -->
+  <script src="./vendor/aframe/aframe-v1.5.0.min.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
+  <script src="./vendor/aframe-extras/aframe-extras-7.5.4.min.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  <script src="./vendor/mindar/mindar-image-aframe-1.2.5.prod.js"></script>
 </head>
 
 <body>
@@ -55,15 +65,26 @@
 
     <!-- ESTADO 3A: cartel completo detectado -->
     <section id="poster-result" class="poster-result hidden" aria-live="polite" hidden>
+      <div class="poster-guide">
+        <span class="poster-guide-icon" aria-hidden="true">✓</span>
+        <div>
+          <p class="poster-guide-kicker">Cartel reconocido</p>
+          <h2>Ahora elige una de sus historias</h2>
+          <p>Acércate y apunta la cámara a cualquiera de las seis mujeres del cartel.</p>
+        </div>
+      </div>
       <a id="fanzine-link" class="button button-fanzine"
-        href="./fanzine.html">
-        Abrir Fanzine Interactivo
+        href="https://issuu.com/docs/2584ca44876396879566fdd917ddff89?fr=sYzUyNDkzMDg4NzE"
+        target="_blank" rel="noopener noreferrer" data-online-only>
+        Ver fanzine completo <span aria-hidden="true">↗</span>
       </a>
     </section>
 
     <!-- Imagen HTML estable: no tiembla cuando MindAR pierde algunos fotogramas. -->
     <div id="fixed-image-container" class="fixed-image-container hidden" hidden>
-      <img id="fixed-image" class="fixed-image" src="" alt="" draggable="false">
+      <img id="fixed-image" class="fixed-image"
+        src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+        alt="" draggable="false">
     </div>
 
     <button id="close-ar" class="close-ar hidden" type="button"
@@ -75,7 +96,7 @@
     <section id="story-card" class="story-card hidden" aria-live="polite" hidden>
       <div class="story-content">
         <p class="story-kicker">Historia que inspira</p>
-        <h2 id="story-name"></h2>
+        <h2 id="story-name">Historia que inspira</h2>
         <p id="story-quote" class="story-quote"></p>
 
         <div class="story-actions">
@@ -85,7 +106,7 @@
           </button>
 
           <a id="learn-more-link" class="button button-primary" href="#">
-            Saber más
+            Ver artículo del fanzine
           </a>
 
           <button id="scan-again-button" class="button button-secondary" type="button">
@@ -137,7 +158,7 @@
 
       <a-asset-item
         id="modelo-mujeres"
-        src="./assets/models/mural.glb"
+        src="./assets/models/animacionFinal.glb"
       >
       </a-asset-item>
 
@@ -257,9 +278,10 @@
 
 
   <!-- El orden es importante: audio -> UI -> conexión con MindAR. -->
-  <script src="./js/audio.js?v=4.0.0"></script>
-  <script src="./js/app.js?v=4.0.0"></script>
-  <script src="./js/ar.js?v=4.0.0"></script>
+  <script src="./js/audio.js?v=6.0.0"></script>
+  <script src="./js/app.js?v=6.0.0"></script>
+  <script src="./js/ar.js?v=6.0.0"></script>
+  <script src="./js/pwa.js?v=6.0.0"></script>
 
 </body>
 

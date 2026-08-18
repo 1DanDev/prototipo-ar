@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Historias que Inspiran</title>
+  <desc id="desc">Libro abierto con una estrella sobre un fondo morado.</desc>
+  <rect width="512" height="512" rx="112" fill="#321551"/>
+  <circle cx="404" cy="108" r="58" fill="#6d3cc3" opacity=".72"/>
+  <path d="M256 161c-49-37-112-40-159-18v211c48-19 111-14 159 25V161Z" fill="#f1edff"/>
+  <path d="M256 161c49-37 112-40 159-18v211c-48-19-111-14-159 25V161Z" fill="#c9b8ff"/>
+  <path d="M256 161v218" stroke="#6d3cc3" stroke-width="13" stroke-linecap="round"/>
+  <path d="m256 82 11 29 29 11-29 11-11 29-11-29-29-11 29-11 11-29Z" fill="#ffffff"/>
+  <path d="M126 198c33-9 67-4 96 12M126 237c33-9 67-4 96 12M290 210c29-16 63-21 96-12M290 249c29-16 63-21 96-12" fill="none" stroke="#6d3cc3" stroke-width="10" stroke-linecap="round" opacity=".62"/>
+</svg>

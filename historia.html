@@ -1,82 +1,55 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#4b267d">
-  <title>Historia que inspira</title>
-  <link rel="stylesheet" href="./css/historia.css?v=3.0.0">
+  <meta name="theme-color" content="#241333">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Página del fanzine · Historias que inspiran</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./assets/icons/app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./assets/icons/app-icon-192.png">
+  <link rel="stylesheet" href="./css/historia.css?v=6.1.0">
+  <link rel="stylesheet" href="./css/pwa.css?v=6.1.0">
 </head>
 
 <body>
-  <header class="site-header">
-    <a class="brand" href="./index.html" aria-label="Volver al escáner">
-      <span class="brand-mark" aria-hidden="true">✦</span>
-      <span>Historias que inspiran</span>
-    </a>
+  <a class="back-link" href="./index.html" aria-label="Regresar a la cámara">
+    <span aria-hidden="true">←</span>
+    <span>Regresar a la cámara</span>
+  </a>
 
-    <a class="back-link" href="./index.html">
-      <span aria-hidden="true">←</span> Volver a AR
-    </a>
-  </header>
+  <main class="page-reader" aria-labelledby="reader-title">
+    <h1 id="reader-title" class="sr-only">Página original del fanzine</h1>
 
-  <main>
-    <section class="hero" aria-labelledby="person-name">
-      <div class="hero-decoration hero-decoration-one" aria-hidden="true"></div>
-      <div class="hero-decoration hero-decoration-two" aria-hidden="true"></div>
+    <div id="image-viewport" class="image-viewport">
+      <figure id="paper-frame" class="page-sheet is-loading">
+        <img id="article-image" class="article-image"
+          src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+          alt="Página original del fanzine" draggable="false">
+        <figcaption id="article-caption" class="sr-only"></figcaption>
+      </figure>
+    </div>
 
-      <div class="portrait-wrap">
-        <img id="person-image" class="portrait" src="" alt="">
-        <span class="portrait-label">Ingeniería · Ciencia · Inspiración</span>
-      </div>
+    <nav class="reader-controls" aria-label="Controles del visor">
+      <button id="previous-story" class="round-button" type="button"
+        aria-label="Ver la página de la historia anterior">←</button>
 
-      <div class="hero-copy">
-        <p class="eyebrow">Conoce su historia</p>
-        <h1 id="person-name">Historia que inspira</h1>
-        <blockquote id="person-quote"></blockquote>
+      <p id="article-status" aria-live="polite">Cargando página…</p>
 
-        <audio id="person-audio" controls preload="metadata" hidden></audio>
-      </div>
-    </section>
+      <button id="next-story" class="round-button" type="button"
+        aria-label="Ver la página de la historia siguiente">→</button>
 
-    <section class="story-layout">
-      <article class="story-article">
-        <p class="section-number">01</p>
-        <h2>Una historia que merece ser visible</h2>
-        <p id="person-story">
-          Esta historia forma parte de un proyecto que reconoce las experiencias de las
-          mujeres en la ciencia y la ingeniería. Cada trayectoria abre posibilidades para
-          quienes están imaginando su propio futuro profesional.
-        </p>
-
-        <div class="quote-card">
-          <span aria-hidden="true">“</span>
-          <p>Cuando una historia se comparte, también puede convertirse en el comienzo de otra.</p>
-        </div>
-      </article>
-
-      <aside class="project-card">
-        <p class="eyebrow">Sobre el proyecto</p>
-        <h2>Historias que inspiran</h2>
-        <p>
-          Una experiencia de realidad aumentada creada para visibilizar a mujeres de la
-          ciencia y la ingeniería, acercar sus voces e inspirar nuevas posibilidades.
-        </p>
-        <a class="primary-link" href="./index.html">Escanear otra historia</a>
-        <a class="secondary-link"
-          href="https://www.flipsnack.com/E6E6DBC9E8C/fanzinev1">
-          Abrir fanzine interactivo
-        </a>
-      </aside>
-    </section>
+      <button id="zoom-article" class="zoom-button" type="button" aria-pressed="false">
+        <span aria-hidden="true">⌕</span>
+        <span>Ampliar</span>
+      </button>
+    </nav>
   </main>
 
-  <footer>
-    <p>Historias que inspiran · Experiencia web de realidad aumentada</p>
-  </footer>
-
-  <script src="./js/historia.js?v=3.0.0"></script>
+  <script src="./js/historia.js?v=6.1.0"></script>
+  <script src="./js/pwa.js?v=6.1.0"></script>
 </body>
 
 </html>

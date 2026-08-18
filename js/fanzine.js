@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let pageFlip;
   let feedbackTimer;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function showFeedback(message) {
     window.clearTimeout(feedbackTimer);
@@ -28,12 +29,23 @@ document.addEventListener("DOMContentLoaded", () => {
     pageStatus.textContent = `Página ${visiblePage} de ${totalPages}`;
     previousButton.disabled = currentPage <= 0;
     nextButton.disabled = currentPage >= totalPages - 1;
+    bookElement.dataset.currentPage = String(visiblePage);
+  }
+
+  function resetAudio() {
+    const audioButton = document.querySelector('[data-action="audio"]');
+    const label = audioButton?.querySelector(".action-label");
+
+    audio.pause();
+    audio.currentTime = 0;
+    if (label) label.textContent = "Reproducir Audio";
+    audioButton?.setAttribute("aria-pressed", "false");
   }
 
   function protectInteractiveElement(element) {
     // StPageFlip escucha gestos sobre el libro. Detenemos su propagación desde
     // el primer contacto para que el botón no comience un cambio de página.
-    ["pointerdown", "mousedown", "touchstart"].forEach((eventName) => {
+    ["pointerdown", "pointerup", "mousedown", "touchstart"].forEach((eventName) => {
       element.addEventListener(eventName, (event) => {
         event.stopPropagation();
       }, { passive: true });
@@ -79,11 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .forEach(protectInteractiveElement);
 
   audio.addEventListener("ended", () => {
-    const audioButton = document.querySelector('[data-action="audio"]');
-    const label = audioButton?.querySelector(".action-label");
-
-    if (label) label.textContent = "Reproducir Audio";
-    audioButton?.setAttribute("aria-pressed", "false");
+    resetAudio();
   });
 
   if (!window.St?.PageFlip) {
@@ -91,29 +99,45 @@ document.addEventListener("DOMContentLoaded", () => {
     bookError.hidden = false;
     previousButton.disabled = true;
     nextButton.disabled = true;
-    console.error("StPageFlip no está disponible. Revisa la carga del CDN.");
+    console.error("StPageFlip no está disponible. Revisa el archivo local de la librería.");
     return;
   }
 
   pageFlip = new window.St.PageFlip(bookElement, {
-    width: 550,
-    height: 780,
+    // Proporción vertical 740 × 1050, igual a las páginas SVG exportadas.
+    width: 420,
+    height: 596,
     size: "stretch",
-    minWidth: 180,
-    maxWidth: 550,
-    minHeight: 255,
-    maxHeight: 780,
-    maxShadowOpacity: 0.45,
+    minWidth: 260,
+    maxWidth: 560,
+    minHeight: 369,
+    maxHeight: 795,
+    maxShadowOpacity: 0.72,
     showCover: true,
     mobileScrollSupport: true,
     usePortrait: true,
     autoSize: true,
     drawShadow: true,
-    flippingTime: 750,
-    startZIndex: 10
+    flippingTime: reducedMotion ? 420 : 1350,
+    startZIndex: 10,
+    swipeDistance: 18,
+    clickEventForward: true,
+    showPageCorners: !reducedMotion,
+    disableFlipByClick: false
   });
 
+  // El modo HTML permite conservar los botones superpuestos y deformar cada
+  // hoja como papel flexible durante el giro.
   pageFlip.loadFromHTML(pages);
+
+  // showCover mantiene la portada sola, pero la librería la convierte
+  // internamente en una tapa rígida. Restauramos "soft" después de crear los
+  // pliegos para conservar esa maquetación y obtener curvatura desde el primer
+  // giro, incluida la portada y la contraportada.
+  for (let index = 0; index < pages.length; index += 1) {
+    pageFlip.getPage(index).setDensity("soft");
+  }
+
   updateNavigation(0);
 
   pageFlip.on("flip", (event) => {
@@ -121,20 +145,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Evita que un audio continúe sonando al abandonar su página.
     if (!audio.paused && event.data !== 1) {
-      audio.pause();
-      audio.currentTime = 0;
-      const audioButton = document.querySelector('[data-action="audio"]');
-      const label = audioButton?.querySelector(".action-label");
-      if (label) label.textContent = "Reproducir Audio";
-      audioButton?.setAttribute("aria-pressed", "false");
+      resetAudio();
     }
   });
 
+  pageFlip.on("changeOrientation", (event) => {
+    bookElement.dataset.orientation = event.data;
+  });
+
+  pageFlip.on("changeState", (event) => {
+    bookElement.dataset.flipState = event.data;
+  });
+
   previousButton.addEventListener("click", () => {
-    pageFlip.flipPrev();
+    // flipPrev/flipNext sí animan la hoja; turnToPrevPage/turnToNextPage no.
+    pageFlip.flipPrev("bottom");
   });
 
   nextButton.addEventListener("click", () => {
-    pageFlip.flipNext();
+    pageFlip.flipNext("bottom");
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.target.closest("button, a, input, textarea, select")) return;
+
+    if (event.key === "ArrowLeft") pageFlip.flipPrev("bottom");
+    if (event.key === "ArrowRight") pageFlip.flipNext("bottom");
   });
 });

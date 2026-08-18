@@ -5,6 +5,7 @@
 const onboarding = document.querySelector("#onboarding");
 const startButton = document.querySelector("#start-button");
 const scanUI = document.querySelector("#scan-ui");
+const scanHint = document.querySelector(".scan-hint");
 const posterResult = document.querySelector("#poster-result");
 const storyCard = document.querySelector("#story-card");
 const storyName = document.querySelector("#story-name");
@@ -19,48 +20,48 @@ const scanAgainButton = document.querySelector("#scan-again-button");
 let people = {
   denisse: {
     id: "denisse",
-    name: "",
-    quote: "Aquí irá una breve frase de Denisse.",
+    name: "Dra. Mirna Denisse Barreiro Argüelles",
+    quote: "Un resultado que sale mal no significa que tú seas mala en lo que haces.",
     image: "./assets/images/denisse.png",
     audio: "./assets/audio/denisse.mp3",
     learnMoreUrl: "./historia.html?id=denisse"
   },
   esther: {
     id: "esther",
-    name: "",
-    quote: "Aquí irá una breve frase de Esther.",
+    name: "Dra. Esther Lugo González",
+    quote: "La ingeniería no pertenece a los hombres. La ingeniería es ingeniería.",
     image: "./assets/images/esther-06.png",
     audio: "./assets/audio/esther.mp3",
     learnMoreUrl: "./historia.html?id=esther"
   },
   rubi: {
     id: "rubi",
-    name: "",
-    quote: "Aquí irá una breve frase de Rubí.",
+    name: "Ing. Rubí Hernández Luis",
+    quote: "Si falta una mujer en la mesa, hay que hacerle espacio.",
     image: "./assets/images/rubí.png",
     audio: "./assets/audio/rubi.mp3",
     learnMoreUrl: "./historia.html?id=rubi"
   },
   maria: {
     id: "maria",
-    name: "",
-    quote: "Aquí irá una breve frase de María.",
+    name: "Dra. María de Jesús Martínez López",
+    quote: "Cuando una mujer ocupa un espacio, otra puede imaginarse ahí.",
     image: "./assets/images/maria.png",
     audio: "./assets/audio/maria.mp3",
     learnMoreUrl: "./historia.html?id=maria"
   },
   patricia: {
     id: "patricia",
-    name: "",
-    quote: "Aquí irá una breve frase de Patricia.",
+    name: "Dra. Patricia Magaly Gallegos",
+    quote: "La ingeniería no se sufre, se disfruta.",
     image: "./assets/images/patricia.png",
     audio: "./assets/audio/patricia.mp3",
     learnMoreUrl: "./historia.html?id=patricia"
   },
   monica: {
     id: "monica",
-    name: "",
-    quote: "Aquí irá una breve frase de Mónica.",
+    name: "M.C. Mónica Edith García García",
+    quote: "¿Quién te dijo que no podías?",
     image: "./assets/images/monica.png",
     audio: "./assets/audio/monica.mp3",
     learnMoreUrl: "./historia.html?id=monica"
@@ -71,6 +72,8 @@ let activeTargetId = null;
 let activeTargetVisible = false;
 let pendingTargetId = null;
 let storyLocked = false;
+let posterGuideActive = false;
+let posterGuideTimer;
 let tutorialFinished = sessionStorage.getItem("tutorialVisto") === "true";
 
 function hide(element) {
@@ -94,10 +97,13 @@ function hideFixedImage() {
   fixedImage.alt = "";
 }
 
-function showScanState() {
+function showScanState(message = "Apunta al cartel o a un rostro") {
+  window.clearTimeout(posterGuideTimer);
+  posterGuideActive = false;
   hide(posterResult);
   hide(storyCard);
   hideFixedImage();
+  scanHint.textContent = message;
   show(scanUI);
   activeTargetId = null;
   activeTargetVisible = false;
@@ -161,13 +167,24 @@ function showFixedImage(person) {
 }
 
 function showPosterResult() {
+  window.clearTimeout(posterGuideTimer);
+  posterGuideActive = true;
   hide(scanUI);
   hide(storyCard);
   hideFixedImage();
   show(posterResult);
+
+  // La instrucción permanece unos segundos aunque se pierda el target 0,
+  // porque el usuario necesita mover la cámara hacia uno de los retratos.
+  posterGuideTimer = window.setTimeout(() => {
+    if (storyLocked || !posterGuideActive) return;
+    showScanState("Ahora apunta a una mujer del cartel");
+  }, 9000);
 }
 
 function showPersonResult(person) {
+  window.clearTimeout(posterGuideTimer);
+  posterGuideActive = false;
   storyLocked = true;
   hide(scanUI);
   hide(posterResult);
@@ -180,7 +197,7 @@ function closeCurrentStory() {
   storyLocked = false;
   pendingTargetId = null;
   AudioController.stop();
-  showScanState();
+  showScanState("Apunta a otra mujer del cartel");
   console.log("Historia cerrada. El escáner está listo para otro target.");
 }
 
@@ -228,6 +245,13 @@ function handleTargetLost(personId) {
   // La mejora de Andy: las historias no desaparecen por pequeñas pérdidas
   // de tracking; solo se cierran con una acción explícita del usuario.
   if (storyLocked) return;
+
+  // Al dejar de apuntar al cartel completo conservamos la guía para que el
+  // siguiente gesto sea buscar cualquiera de los seis rostros.
+  if (personId === "titulo" && posterGuideActive) {
+    activeTargetId = null;
+    return;
+  }
 
   if (personId === activeTargetId) {
     AudioController.stop();
